@@ -4,9 +4,11 @@ var UpdateApplication = {
 	configXml: "app:/update-config.xml",
 
 	init: function () {
-		this.appUpdater = new air.ApplicationUpdaterUI();
+		//this.appUpdater = new air.ApplicationUpdaterUI();
+		//debug.trace("--"+air.update.events.UpdateEvent.INITIALIZED);
 		this.appUpdater.configurationFile = new air.File( this.configXml );
 		this.appUpdater.addEventListener(air.ErrorEvent.ERROR, UpdateApplication.onError);
+		this.appUpdater.addEventListener("initialized", UpdateApplication.onUpdate);
 		this.appUpdater.initialize();
 	},
 
@@ -28,11 +30,12 @@ var UpdateApplication = {
 	},
 
 	checkUpdate: function () {
+		debug.trace("blub?");
 		UpdateApplication.appUpdater.checkNow();
 	},
 
 	onUpdate: function () {
-		
+		UpdateApplication.checkUpdate();
 	},
 
 	onError: function ( event ) {
