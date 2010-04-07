@@ -1,0 +1,49 @@
+.icon_loadToTree {
+	background-image:url(../img/ico_loadToTree.png) !important;
+}
+
+.icon_loadFromTree {
+	background-image:url(../img/ico_loadFromTree.png) !important;
+}
+
+.icon_copyJson {
+	background-image:url(../img/ico_copy_json.png) !important;
+}
+
+.icon_pasteJson {
+	background-image:url(../img/ico_paste_json.png) !important;
+}
+
+.icon_tree_addKey {
+	background-image:url(../img/ico_add_small.png) !important;
+}
+.icon_tree_addKey_disabled {
+	background-image:url(../img/ico_add_small_disabled.png) !important;
+}
+
+
+.icon_tree_delete {
+	background-image:url(../img/ico_delete_small.png) !important;
+}
+.icon_tree_delete_disabled {
+	background-image:url(../img/ico_delete_small_disabled.png) !important;
+}
+
+
+.x-tree-node-collapsed > img.ico_array {
+	background-image:url(../img/folder-array.png) !important;
+}
+.x-tree-node-expanded > img.ico_array {
+	background-image:url(../img/folder-open-array.png) !important;
+}
+
+.x-tree-node-collapsed > img.ico_object {
+	background-image:url(../img/folder-object.png) !important;
+}
+.x-tree-node-expanded > img.ico_object {
+	background-image:url(../img/folder-open-object.png) !important;
+}
+
+/*.x-status-error {
+	background-image:url(../img/exclamation.gif) !important;
+}*/

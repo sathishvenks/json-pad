@@ -1,0 +1,32 @@
+.parentToolbar {
+	padding: 0px !important;
+	border: none !important;
+}
+
+.x-splitbar-v {
+	cursor: pointer;
+}
+
+.x-splitbar-h {
+	cursor: pointer;
+}
+
+.tree-qtip-cell-caption {
+	float: left;
+	width: 50px;
+}
+
+#jsonStringInputFrame {
+	width: 200px;
+	height: 200px;
+	border: none;
+	padding: 2px;
+	overflow-y: scroll;
+	font: 12px Arial;
+}
+
+.x-status-error {
+	cursor: default !important;
+	font-weight: bold !important;
+	padding-top: 4px;
+}

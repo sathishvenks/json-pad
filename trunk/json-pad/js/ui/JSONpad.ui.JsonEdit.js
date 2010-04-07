@@ -1,0 +1,60 @@
+var JSONpadUi_JsonEdit = {
+	xtype: 'tabpanel',
+	activeTab: 0,
+	region: 'center',
+	id: 'JsonEdit',
+	ref: 'jsonEdit',
+	items: [
+	{
+		xtype: 'form',
+		title: 'Edit Key',
+		labelWidth: 100,
+		labelAlign: 'left',
+		layout: 'form',
+		frame: true,
+		id: 'JsonEdit_editKey',
+		items: [
+		{
+			xtype: 'textarea',
+			fieldLabel: 'Key',
+			anchor: '100%',
+			name: 'key',
+			id: 'JsonEdit_editKey_key'
+		},
+		{
+			xtype: 'textarea',
+			fieldLabel: 'Value',
+			anchor: '100%',
+			name: 'value',
+			id: 'JsonEdit_editKey_value'
+		},
+		{
+			xtype: 'checkbox',
+			fieldLabel: 'isNull',
+			boxLabel: '',
+			anchor: '100%',
+			name: 'isNull',
+			id: 'JsonEdit_editKey_isNull'
+		}
+		]
+	},
+	{
+		xtype: 'form',
+		title: 'Edit Object - Array',
+		labelWidth: 100,
+		labelAlign: 'left',
+		layout: 'form',
+		frame: true,
+		id: 'JsonEdit_editObject',
+		items: [
+		{
+			xtype: 'textarea',
+			fieldLabel: 'Index',
+			anchor: '100%',
+			name: 'index',
+			id: 'JsonEdit_editObject_index'
+		}
+		]
+	}
+	]
+}
