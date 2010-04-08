@@ -36,7 +36,12 @@ var JSONpadUi_JsonEdit = {
 			name: 'isNull',
 			id: 'JsonEdit_editKey_isNull'
 		}
-		]
+		],
+		buttons: [{
+			text: 'SAVE',
+			id: 'btn_editKey_save'
+			//handler: saveKey
+		}]
 	},
 	{
 		xtype: 'form',
@@ -54,7 +59,12 @@ var JSONpadUi_JsonEdit = {
 			name: 'index',
 			id: 'JsonEdit_editObject_index'
 		}
-		]
+		],
+		buttons: [{
+			text: 'SAVE',
+			id: 'btn_editObject_save'
+			//handler: saveIndex
+		}]
 	}
 	]
 }

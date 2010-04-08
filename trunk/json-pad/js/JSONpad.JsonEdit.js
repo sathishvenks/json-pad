@@ -24,12 +24,60 @@ var JsonEditFunctions = {
 			Ext.getCmp("JsonEdit_editObject").setVisible(true);
 			Ext.getCmp("JsonEdit_editObject").enable();
 		}
+	},
+
+	saveKeyData: function () {
+		setStatusbarBusy( true );
+
+		var key = Ext.getCmp("JsonEdit_editKey_key").getValue();
+		var value = Ext.getCmp("JsonEdit_editKey_value").getValue();
+		var isNull = Ext.getCmp("JsonEdit_editKey_isNull").getValue();
+		
+		var jsonTree = Ext.getCmp("JsonTree");
+		var selectionModel = jsonTree.getSelectionModel();
+		var node = selectionModel.getSelectedNode();
+
+		
+		if (isNull)
+		{
+			value = "null";
+			node.attributes.type = "null";
+		}
+		else
+		{
+			if ( !isNaN(value) && !isString(value) && value != null )
+				node.attributes.type = "number";
+			else
+				node.attributes.type = "string";
+		}
+		
+		node.setText ( key );
+
+		node.attributes.value = value;
+
+		setStatusbarBusy( false );
+		setStatusbarStatus('Selektierter Key erfolgreich gespeichert', "valid", true);
+	},
+
+	saveObjectdata: function () {
+		setStatusbarBusy( true );
+
+		var index = Ext.getCmp("JsonEdit_editObject_index").getValue();
+
+		var jsonTree = Ext.getCmp("JsonTree");
+		var selectionModel = jsonTree.getSelectionModel();
+		var node = selectionModel.getSelectedNode();
+		node.setText ( index );
+
+		setStatusbarBusy( false );
+		setStatusbarStatus('Selektiertes Array od. Objekt erfolgreich gespeichert', "valid", true);
 	}
 };
 
 var JSONpad_JsonEdit = {
 	initHandler: function ( me ) {
-
+		Ext.getCmp("btn_editKey_save").setHandler( JsonEditFunctions.saveKeyData );
+		Ext.getCmp("btn_editObject_save").setHandler( JsonEditFunctions.saveObjectdata );
 	},
 
 	initEvents: function ( me ) {

@@ -93,12 +93,12 @@ var JsonStringFunctions = {
 		else
 			jsonString += "}\n";
 
-		if (jsonString.substring(0,1) == "\t")
+		/*if (jsonString.substring(0,1) == "\t")
 			jsonString = jsonString.substring(1, jsonString.length);
 		if (jsonString.substring(0,1) == "\t")
 			jsonString = jsonString.substring(1, jsonString.length);
-
-		Ext.getCmp("JsonStringForm_jsonString").setValue( jsonString );
+*/
+		Ext.getCmp("JsonStringForm_jsonString").setValue( jsonString.trim() );
 
 		setStatusbarBusy( false );
 		setStatusbarStatus('JSON String erfolgreich zusammengebaut', "valid", true);
