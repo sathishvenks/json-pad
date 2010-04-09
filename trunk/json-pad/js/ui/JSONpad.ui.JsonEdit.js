@@ -45,7 +45,7 @@ var JSONpadUi_JsonEdit = {
 	},
 	{
 		xtype: 'form',
-		title: 'Edit Object - Array',
+		title: 'Edit Object/Array',
 		labelWidth: 100,
 		labelAlign: 'left',
 		layout: 'form',

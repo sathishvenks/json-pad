@@ -73,21 +73,21 @@ var JSONpadUi_JsonTree = {
 		{
 			id: 'JsonTree_tbar_add',
 			iconCls: 'icon_tree_addKey',
-			tooltip: 'Füge ein(en) Key/Objekt/Array hinzu',
+			tooltip: 'Add a key/object/array',
 			menu: {
 				id: 'menu_tree_add',
 				items: [
 				{
-					text: 'Add Key',
+					text: 'Add key',
 					id: 'btn_menu_tree_add_key'
 				},
 				'-',
 				{
-					text: 'Add Object',
+					text: 'Add object',
 					id: 'btn_menu_tree_add_object'
 				},
 				{
-					text: 'Add Array',
+					text: 'Add array',
 					id: 'btn_menu_tree_add_array'
 				}
 				]
@@ -95,7 +95,7 @@ var JSONpadUi_JsonTree = {
 		},
 		{
 			iconCls: 'icon_tree_delete',
-			tooltip: 'Lösche selektierten Knoten',
+			tooltip: 'Delete selected node',
 			id: 'btn_menu_tree_delete'
 		}
 		]

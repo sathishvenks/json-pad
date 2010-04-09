@@ -18,47 +18,47 @@ var JSONpadUi_JsonString = {
 			ref: '../tbar_menu',
 			items: [
 			{
-				text: 'Datei',
+				text: 'File',
 				id: 'JsonStringForm_tbar_file',
 				menu: {
 					id: 'menu_file',
 					items: [
 					{
-						text: 'Neu',
+						text: 'New',
 						id: 'btn_menu_file_new'
 					},
 					{
-						text: 'Beenden',
+						text: 'Quit',
 						id: 'btn_menu_file_quit'
 					}
 					]
 				}
 			},
 			{
-				text: 'Bearbeiten',
+				text: 'Edit',
 				id: 'JsonStringForm_tbar_edit',
 				menu: {
 					id: 'menu_edit',
 					items: [
 					{
-						text: 'JSON kopieren',
+						text: 'Copy JSON string',
 						id: 'btn_menu_file_copyJson'
 					},
 					{
-						text: 'JSON einfügen',
+						text: 'Paste JSON string',
 						id: 'btn_menu_file_pasteJson'
 					}
 					]
 				}
 			},
 			{
-				text: 'Hilfe',
+				text: 'Help',
 				id: 'JsonStringForm_tbar_help',
 				menu: {
 					id: 'menu_help',
 					items: [
 					{
-						text: 'Auf Update prüfen',
+						text: 'Check for updates',
 						id: 'btn_menu_help_checkUpdate'
 					}
 					]
@@ -74,13 +74,13 @@ var JSONpadUi_JsonString = {
 				iconCls: 'icon_loadToTree',
 				id: 'btn_menu_ico_loadToTree',
 				scale: 'large',
-				tooltip: 'Lade JSON String in Baum-Ansicht',
+				tooltip: 'Load JSON string into tree view',
 				ref: 'btn_loadToTree'
 			},{
 				iconCls: 'icon_loadFromTree',
 				id: 'btn_menu_ico_loadFromTree',
 				scale: 'large',
-				tooltip: 'Lade JSON String aus der Baum-Ansicht',
+				tooltip: 'Get JSON String from tree data',
 				ref: 'btn_loadFromTree'
 			},
 			'-',
@@ -88,35 +88,35 @@ var JSONpadUi_JsonString = {
 				iconCls: 'icon_copyJson',
 				id: 'btn_menu_ico_copyJson',
 				scale: 'large',
-				tooltip: 'Kopiere JSON String in die Zwischenablage',
+				tooltip: 'Copy JSON string into the clipboard',
 				ref: 'btn_copyJson'
 			},{
 				iconCls: 'icon_pasteJson',
 				id: 'btn_menu_ico_pasteJson',
 				scale: 'large',
-				tooltip: 'Füge JSON String aus der Zwischenablage ein',
+				tooltip: 'Paste JSON string from the clipboard',
 				ref: 'btn_pasteJson'
 			},
 			'-',
 			{
-				text: 'Beispiele',
+				text: 'Examples',
 				id: 'JsonStringForm_ibar_samples',
 				scale: 'large',
-				tooltip: 'Füge einen Beispiel JSON String ein',
+				tooltip: 'Insert a JSON example',
 				menu: {
 					id: 'menu_samples',
 					items: [{
-						text: 'Beispiel 1',
+						text: 'Example 1',
 						id: 'JsonStringForm_ibar_samples_1',
-						example: '{\n"test":"test2"\n}'
+						example: '{\n\t"Key": "value"\n}'
 					},{
-						text: 'Beispiel 2',
+						text: 'Example 2',
 						id: 'JsonStringForm_ibar_samples_2',
 						example: '{\n\t"Kreditkarte": "Xema",\n\t"Nummer": "1234-5678-9012-3456",\n\t"Inhaber": {\n\t\t"Name": "Reich",\n\t\t"Vorname": "Rainer",\n\t\t"Geschlecht": "männlich",\n\t\t"Vorlieben": [ "Reiten", "Schwimmen", "Lesen" ],\n\t\t"Alter": null\n\t},\n\t"Deckung": 2e+6,\n\t"Währung": "EURO"\n}'
 					},{
-						text: 'Beispiel 3',
+						text: 'Example 3',
 						id: 'JsonStringForm_ibar_samples_3',
-						example: '{\n\tfirstName: "christopher",\n\tlastName: "S.",\n\tchildren: [\n\t\t{\n\t\t\tname: "Markus",\n\t\t\tage: 10\n\t\t},\n\t\t{\n\t\t\tname: "Michael",\n\t\t\tage: 8\n\t\t}\n\t]\n}'
+						example: '{\n\t"MyObject": {\n\t\t"MyKey": "with value"\n\t},\n\t"MyArray": ["Value1", "Value2"]\n}'
 					}]
 				}
 			}
