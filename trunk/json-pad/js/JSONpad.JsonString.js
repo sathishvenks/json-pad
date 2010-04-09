@@ -54,15 +54,13 @@ var JsonStringFunctions = {
 		}
 		catch (e)
 		{
-			setStatusbarStatus("Ungültige JSON Daten", "error", true);
+			setStatusbarStatus("No valid JSON data", "error", true);
 			return;
 		}
 
 		var rootType = getObjectType( jsonObject );
 
 		var itemsForTree = buildObjectForTree(jsonObject, [], 0, (rootType == "array"));
-
-		debug.dump(JsonTreeFunctions, "JsonTreeFunctions");
 
 		var root = JsonTreeFunctions.getDefaultRootNode( rootType, itemsForTree );
 
@@ -71,7 +69,7 @@ var JsonStringFunctions = {
 		jsonTree.getLoader().load( jsonTree.root );
 
 		setStatusbarBusy( false );
-		setStatusbarStatus('JSON String erfolgreich in den Baum geladen', "valid", true);
+		setStatusbarStatus('JSON String successfully loaded into tree view', "valid", true);
 	},
 
 	loadTreeToJsonString: function () {
@@ -101,13 +99,13 @@ var JsonStringFunctions = {
 		Ext.getCmp("JsonStringForm_jsonString").setValue( jsonString.trim() );
 
 		setStatusbarBusy( false );
-		setStatusbarStatus('JSON String erfolgreich zusammengebaut', "valid", true);
+		setStatusbarStatus('JSON string successfully build', "valid", true);
 	},
 
 	setExampleToJsonString: function () {
 		Ext.getCmp("JsonStringForm_jsonString").setValue( this.example );
 
-		setStatusbarStatus('"' + this.text + '" eingefügt', "valid", true);
+		setStatusbarStatus('"' + this.text + '" inserted into JSON string', "valid", true);
 	}
 };
 
@@ -275,7 +273,7 @@ var JSONpad_JsonStringForm = {
 		Ext.getCmp("btn_menu_file_copyJson").setHandler( MenuFunctions.copyFromJsonStringToClipboard );
 		Ext.getCmp("btn_menu_file_pasteJson").setHandler( MenuFunctions.getFromClipboardToJsonString );
 
-		Ext.getCmp("btn_menu_help_checkUpdate").setHandler( UpdateApplication.checkUpdate );
+		Ext.getCmp("btn_menu_help_checkUpdate").setHandler( function () { UpdateApplication.checkUpdate(true); } );
 
 
 		Ext.getCmp("btn_menu_ico_loadToTree").setHandler( JsonStringFunctions.loadJsonStringToTree );

@@ -34,7 +34,7 @@ JSONpad.app = function() {
 		// public methods
 		init: function() {
 			var viewport = new JSONpad();
-
+//Ext.MessageBox.alert("test", "message", null, this);
 			//Ext.getCmp('JSONpad_StatusBar_bbar').setText("Blub?");
 
 //jsonStringInputFrame.document.designMode="on";

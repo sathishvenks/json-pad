@@ -8,7 +8,7 @@ var UpdateApplication = {
 		//debug.trace("--"+air.update.events.UpdateEvent.INITIALIZED);
 		this.appUpdater.configurationFile = new air.File( this.configXml );
 		this.appUpdater.addEventListener(air.ErrorEvent.ERROR, UpdateApplication.onError);
-		this.appUpdater.addEventListener("initialized", UpdateApplication.onUpdate);
+		this.appUpdater.addEventListener("initialized", UpdateApplication.onInitialization);
 		this.appUpdater.initialize();
 	},
 
@@ -34,7 +34,7 @@ var UpdateApplication = {
 		UpdateApplication.appUpdater.checkNow();
 	},
 
-	onUpdate: function () {
+	onInitialization: function () {
 		UpdateApplication.checkUpdate();
 	},
 
