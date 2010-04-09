@@ -235,5 +235,18 @@ var JSONpad_JsonTree = {
 				}
 			}
 		});
+
+
+
+		Ext.getCmp("JsonTree").addListener("enddrag", function (tree, node, event) {
+			var parent = node.parentNode;
+
+			if (parent.attributes.type == "array")
+			{
+				node.setText( node.attributes.value );
+			}
+
+			node.select();
+		});
 	}
 }

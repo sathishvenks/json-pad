@@ -40,7 +40,7 @@ var JSONpadUi_JsonEdit = {
 		buttons: [{
 			text: 'SAVE',
 			id: 'btn_editKey_save'
-			//handler: saveKey
+		//handler: saveKey
 		}]
 	},
 	{
@@ -63,7 +63,7 @@ var JSONpadUi_JsonEdit = {
 		buttons: [{
 			text: 'SAVE',
 			id: 'btn_editObject_save'
-			//handler: saveIndex
+		//handler: saveIndex
 		}]
 	}
 	]

@@ -18,7 +18,7 @@ var UpdateApplication = {
 		var xmlObject = appXml.parseFromString(xmlString, "text/xml");
 		var root = xmlObject.getElementsByTagName('application')[0];
 
-		return [lblAppVersion.value = root.getElementsByTagName("version")[0].firstChild.data, oot.getElementsByTagName("name")[0].firstChild.data];
+		return [root.getElementsByTagName("version")[0].firstChild.data, root.getElementsByTagName("name")[0].firstChild.data];
 	},
 
 	getApplicationVersion: function () {

@@ -13,6 +13,20 @@ var MenuFunctions = {
 		Ext.getCmp("JsonTree").setRootNode( JsonTreeFunctions.getDefaultRootNode("object", null) );
 	},
 
+	compressJsonString: function () {
+		var txt = Ext.getCmp("JsonStringForm_jsonString").getValue();
+		var row = null;
+		var txtArray = txt.split("\n");
+		var txtString = "";
+		for (row in txtArray)
+		{
+			if (row != "remove")
+				txtString += String(txtArray[row]).trim();
+		}
+
+		Ext.getCmp("JsonStringForm_jsonString").setValue( txtString );
+	},
+
 	copyFromJsonStringToClipboard: function () {
 		var txt = Ext.getCmp("JsonStringForm_jsonString").getValue();
 
@@ -39,6 +53,23 @@ var MenuFunctions = {
 		Ext.getCmp("JsonStringForm_jsonString").setValue( txt );
 
 		setStatusbarStatus("JSON String erfolgreich von Zwischenablage kopiert", "valid", true);
+	},
+
+	showAboutWindow: function () {
+		Ext.MessageBox.show({
+			title: 'About JSONpad - v' + UpdateApplication.getApplicationVersion(),
+			msg: aboutWindow,
+			buttons: Ext.MessageBox.OK,
+			animEl: 'btn_menu_help_about',
+			minWidth: 300,
+			width: 400
+		});
+
+		Ext.select("a.link-to-browser").on("click", function (e, el) {
+			var href = el.id;
+			openUrl(href);
+			return false;
+		});
 	}
 };
 
@@ -263,23 +294,35 @@ showDelay: 3000
 };
 
 
+var aboutWindow = "";
 
+/*aboutWindow += 'Version: ' + UpdateApplication.getApplicationVersion();
+aboutWindow += '<br />&nbsp;<br />&nbsp;<br />&nbsp;<br />';*/
+aboutWindow += '<span style="font-size: 11px;">This project started by Christopher S&ouml;llinger. ';
+aboutWindow += 'It is open source and totally<br />free under the New BSD License.<br />&nbsp;<br />';
+aboutWindow += 'You can get the latest source code files at the <a href="#" id="http://code.google.com/p/json-pad/" class="link-to-browser">Google Code Project</a> page.<br />&nbsp;<br />';
+aboutWindow += '<div style="float: left; width: 70px;"><b>Contact:</b></div><a href="#" id="mailto:zerogiven@gmail.com" class="link-to-browser">zerogiven@gmail.com</a><br style="clear: both;" />';
+aboutWindow += '<div style="float: left; width: 70px;"><b>Homepage:</b></div><a href="#" id="http://jsonpad.web.gg" class="link-to-browser">http://jsonpad.web.gg</a><br style="clear: both;" />';
+aboutWindow += '</span>';
 
 var JSONpad_JsonStringForm = {
 	initHandler: function ( me ) {
+
 		Ext.getCmp("btn_menu_file_new").setHandler( MenuFunctions.resetApplication );
 		Ext.getCmp("btn_menu_file_quit").setHandler( MenuFunctions.quitApplication );
 
 		Ext.getCmp("btn_menu_file_copyJson").setHandler( MenuFunctions.copyFromJsonStringToClipboard );
 		Ext.getCmp("btn_menu_file_pasteJson").setHandler( MenuFunctions.getFromClipboardToJsonString );
 
-		Ext.getCmp("btn_menu_help_checkUpdate").setHandler( function () { UpdateApplication.checkUpdate(true); } );
+		Ext.getCmp("btn_menu_help_checkUpdate").setHandler( UpdateApplication.checkUpdate );
+		Ext.getCmp("btn_menu_help_about").setHandler( MenuFunctions.showAboutWindow );
 
 
 		Ext.getCmp("btn_menu_ico_loadToTree").setHandler( JsonStringFunctions.loadJsonStringToTree );
 		Ext.getCmp("btn_menu_ico_loadFromTree").setHandler( JsonStringFunctions.loadTreeToJsonString );
 		Ext.getCmp("btn_menu_ico_copyJson").setHandler( MenuFunctions.copyFromJsonStringToClipboard );
 		Ext.getCmp("btn_menu_ico_pasteJson").setHandler( MenuFunctions.getFromClipboardToJsonString );
+		Ext.getCmp("btn_menu_ico_compressJson").setHandler( MenuFunctions.compressJsonString );
 
 		//@todo Das muss unbedingt dynamischer werden!
 		Ext.getCmp("JsonStringForm_ibar_samples_1").setHandler( JsonStringFunctions.setExampleToJsonString, Ext.getCmp("JsonStringForm_ibar_samples_1") );

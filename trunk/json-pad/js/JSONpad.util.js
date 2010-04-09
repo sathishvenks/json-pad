@@ -22,6 +22,11 @@ function isString(a) {
     return typeof a == 'string';
 }
 
+function openUrl (url) {
+	debug.trace("--OPEN URL '" + url + "'--");
+	var urlReq = new air.URLRequest(url); air.navigateToURL(urlReq);
+}
+
 function count (mixed_var, mode) {
 	// Count the number of elements in a variable (usually an array)
 	//

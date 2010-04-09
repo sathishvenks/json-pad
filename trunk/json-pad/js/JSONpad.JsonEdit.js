@@ -56,7 +56,7 @@ var JsonEditFunctions = {
 		node.attributes.value = value;
 
 		setStatusbarBusy( false );
-		setStatusbarStatus('Selektierter Key erfolgreich gespeichert', "valid", true);
+		setStatusbarStatus('Saved selected key successfully', "valid", true);
 	},
 
 	saveObjectdata: function () {
@@ -70,7 +70,7 @@ var JsonEditFunctions = {
 		node.setText ( index );
 
 		setStatusbarBusy( false );
-		setStatusbarStatus('Selektiertes Array od. Objekt erfolgreich gespeichert', "valid", true);
+		setStatusbarStatus('Saved selected object/array successfully', "valid", true);
 	}
 };
 
@@ -81,7 +81,7 @@ var JSONpad_JsonEdit = {
 	},
 
 	initEvents: function ( me ) {
-		Ext.getCmp("JsonEdit").addListener( "afterlayout", function () {
+		Ext.getCmp("JsonEdit").addListener( "render", function () {
 			JsonEditFunctions.disableEditor(true,true)
 		} );
 
@@ -102,6 +102,14 @@ var JSONpad_JsonEdit = {
 			{
 				Ext.getCmp("JsonEdit_editKey_value").enable();
 			}
+		});
+
+
+		Ext.getCmp("JsonEdit_editKey_isNull").addListener('render', function(c) {
+			new Ext.ToolTip({
+				target: 'JsonEdit_editKey_isNull',
+				html: 'Set value to "null"'
+			});
 		});
 	}
 }

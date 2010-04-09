@@ -58,6 +58,9 @@ var JSONpadUi_JsonString = {
 					id: 'menu_help',
 					items: [
 					{
+						text: 'About...',
+						id: 'btn_menu_help_about'
+					},'-',{
 						text: 'Check for updates',
 						id: 'btn_menu_help_checkUpdate'
 					}
@@ -96,6 +99,13 @@ var JSONpadUi_JsonString = {
 				scale: 'large',
 				tooltip: 'Paste JSON string from the clipboard',
 				ref: 'btn_pasteJson'
+			},{
+				//iconCls: 'icon_pasteJson',
+				text: "Compress",
+				id: 'btn_menu_ico_compressJson',
+				scale: 'large',
+				tooltip: 'Delete all spaces and new lines in the JSON string',
+				ref: 'btn_compressJson'
 			},
 			'-',
 			{

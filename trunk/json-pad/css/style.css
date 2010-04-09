@@ -30,3 +30,7 @@
 	font-weight: bold !important;
 	padding-top: 4px;
 }
+
+.x-window-dlg {
+	z-index: 20010 !important;
+}
