@@ -5,6 +5,15 @@ var JsonStatusbarFunctions = {
 			text: text,
 			clear: false
 		});
+	},
+
+	clear: function () {
+		var sb = Ext.getCmp('JSONpad_StatusBar_bbar');
+		sb.clearStatus();
+	},
+
+	setPanelBody: function (txt) {
+		Ext.get(Ext.query("div.status-bar div.x-panel-body")[0]).update(txt);
 	}
 };
 
@@ -25,4 +34,16 @@ var setStatusbarBusy = function (showBusy) {
 		sb.clearStatus({
 			useDefaults:true
 		})
+}
+
+var JSONpad_StatusBar = {
+	initHandler: function ( me ) {
+
+	},
+
+	initEvents: function ( me ) {
+		Ext.getCmp("JSONpad_StatusBar").on("afterrender", function (cmp) {
+			JsonTreeFunctions.setTreePath( Ext.getCmp("JsonTree").getRootNode() );
+		});
+	}
 }

@@ -25,11 +25,13 @@ var JSONpadUi_JsonString = {
 					items: [
 					{
 						text: 'New',
-						id: 'btn_menu_file_new'
+						id: 'btn_menu_file_new',
+						statusBarTip: 'Clears textarea and tree'
 					},
 					{
 						text: 'Quit',
-						id: 'btn_menu_file_quit'
+						id: 'btn_menu_file_quit',
+						statusBarTip: 'Quit the application'
 					}
 					]
 				}
@@ -42,11 +44,13 @@ var JSONpadUi_JsonString = {
 					items: [
 					{
 						text: 'Copy JSON string',
-						id: 'btn_menu_file_copyJson'
+						id: 'btn_menu_file_copyJson',
+						statusBarTip: 'Copy JSON string to clipboard'
 					},
 					{
 						text: 'Paste JSON string',
-						id: 'btn_menu_file_pasteJson'
+						id: 'btn_menu_file_pasteJson',
+						statusBarTip: 'Paste JSON string from cliboard'
 					}
 					]
 				}
@@ -59,10 +63,12 @@ var JSONpadUi_JsonString = {
 					items: [
 					{
 						text: 'About...',
-						id: 'btn_menu_help_about'
+						id: 'btn_menu_help_about',
+						statusBarTip: 'About the application'
 					},'-',{
 						text: 'Check for updates',
-						id: 'btn_menu_help_checkUpdate'
+						id: 'btn_menu_help_checkUpdate',
+						statusBarTip: 'Check if updates available'
 					}
 					]
 				}
@@ -83,8 +89,14 @@ var JSONpadUi_JsonString = {
 				iconCls: 'icon_loadFromTree',
 				id: 'btn_menu_ico_loadFromTree',
 				scale: 'large',
-				tooltip: 'Get JSON String from tree data',
+				tooltip: 'Get JSON string from tree data',
 				ref: 'btn_loadFromTree'
+			},{
+				iconCls: 'icon_loadFromTreeCompressed',
+				id: 'btn_menu_ico_loadFromTreeCompressed',
+				scale: 'large',
+				tooltip: 'Get a compressed JSON string from tree data',
+				ref: 'btn_loadFromTreeCompressed'
 			},
 			'-',
 			{
@@ -99,13 +111,6 @@ var JSONpadUi_JsonString = {
 				scale: 'large',
 				tooltip: 'Paste JSON string from the clipboard',
 				ref: 'btn_pasteJson'
-			},{
-				//iconCls: 'icon_pasteJson',
-				text: "Compress",
-				id: 'btn_menu_ico_compressJson',
-				scale: 'large',
-				tooltip: 'Delete all spaces and new lines in the JSON string',
-				ref: 'btn_compressJson'
 			},
 			'-',
 			{

@@ -70,6 +70,19 @@ var MenuFunctions = {
 			openUrl(href);
 			return false;
 		});
+	},
+
+	addStatusBarTip: function (item) {
+		if (item.statusBarTip != null && item.statusBarTip != "")
+		{
+			item.getEl().on('mouseover', function () {
+				JsonStatusbarFunctions.addStatusBarTooltip(item.statusBarTip);
+			});
+
+			item.getEl().on('mouseout', function () {
+				JsonStatusbarFunctions.clear();
+			});
+		}
 	}
 };
 
@@ -101,26 +114,32 @@ var JsonStringFunctions = {
 
 		setStatusbarBusy( false );
 		setStatusbarStatus('JSON String successfully loaded into tree view', "valid", true);
+
+		JsonStringFunctions.loadTreeToJsonString(false);
 	},
 
-	loadTreeToJsonString: function () {
+	loadTreeToJsonString: function (compress) {
 		var jsonTree = Ext.getCmp("JsonTree");
 		var rootNode = jsonTree.getRootNode();
 		var jsonString = "";
+		var lb = "";
 
 		setStatusbarBusy( true );
 
-		if ( rootNode.attributes.isArray )
-			jsonString += "[\n";
-		else
-			jsonString += "{\n";
-
-		jsonString = buildJSONStringFromTree ( rootNode, jsonString, 0 );
+		if (!compress)
+			lb = "\n";
 
 		if ( rootNode.attributes.isArray )
-			jsonString += "]\n";
+			jsonString += "[" + lb;
 		else
-			jsonString += "}\n";
+			jsonString += "{" + lb;
+
+		jsonString = buildJSONStringFromTree ( rootNode, jsonString, 0, compress );
+
+		if ( rootNode.attributes.isArray )
+			jsonString += "]" + lb;
+		else
+			jsonString += "}" + lb;
 
 		/*if (jsonString.substring(0,1) == "\t")
 			jsonString = jsonString.substring(1, jsonString.length);
@@ -140,14 +159,25 @@ var JsonStringFunctions = {
 	}
 };
 
-var buildJSONStringFromTree = function ( node, jsonString, lvl ) {
+var buildJSONStringFromTree = function ( node, jsonString, lvl, compress ) {
+	var lb = "";
+	var spacer = ""
+	var pt = ":";
+
+	if (!compress)
+	{
+		lb = "\n";
+		spacer = "\t";
+		pt = " : "
+	}
+
 	if (!lvl) lvl = 0;
 
 	lvl++;
 
 	var tab = "";
 	for (var i = 1; i < lvl; i++)
-		tab += "\t";
+		tab += spacer;
 
 	var collapseNode = false;
 	if ( node.isExpandable() && !node.isExpanded() )
@@ -160,25 +190,25 @@ var buildJSONStringFromTree = function ( node, jsonString, lvl ) {
 		if ( child.hasChildNodes() )
 		{
 			if ( child.attributes.type == "array" )
-				jsonString += tab + '\t"' + child.attributes.text + '": [\n';
+				jsonString += tab + spacer + '"' + child.attributes.text + '"' + pt + '[' + lb;
 			else
 			{
-				jsonString += tab + '\t';
+				jsonString += tab + spacer;
 
 				if ( node.attributes.type != "array" )
-					jsonString += '"' + child.attributes.text + '": ';
+					jsonString += '"' + child.attributes.text + '"' + pt;
 
-				jsonString += '{\n';
+				jsonString += '{' + lb;
 			}
 
-			jsonString = tab + buildJSONStringFromTree ( child, jsonString, lvl );
+			jsonString = tab + buildJSONStringFromTree ( child, jsonString, lvl, compress );
 
 			if ( child.attributes.type == "array" )
-				jsonString += tab + '\t]';
+				jsonString += tab + spacer + ']';
 			else
-				jsonString += tab + '\t}';
+				jsonString += tab + spacer + '}';
 
-			jsonString += ( !child.isLast() ? "," : "" ) + '\n';
+			jsonString += ( !child.isLast() ? "," : "" ) + lb;
 		}
 		else
 		{
@@ -188,14 +218,14 @@ var buildJSONStringFromTree = function ( node, jsonString, lvl ) {
 				nodeValue = '"' + nodeValue + '"';
 
 
-			jsonString += tab + '\t';
+			jsonString += tab + spacer;
 
 			if ( node.attributes.type == "array" )
 				jsonString += nodeValue;
 			else
-				jsonString += '"' + child.attributes.text + '": ' + nodeValue;
+				jsonString += '"' + child.attributes.text + '"' + pt + '' + nodeValue;
 
-			jsonString += ( !child.isLast() ? "," : "" ) + '\n';
+			jsonString += ( !child.isLast() ? "," : "" ) + lb;
 		}
 	});
 
@@ -220,8 +250,9 @@ var buildObjectForTree = function (obj, treeObj, lvl, parentIsArray) {
 			
 			var nodeObject = new Object();
 
-			nodeObject.id =  lvl + '_' + counter;
-
+			//nodeObject.id =  'treenode_' + lvl + '_' + counter;
+			nodeObject.id = Ext.id();
+			//debug.trace(nodeObject.id);
 			if ( isObject( obj[ind] ) && obj[ind] != null )
 			{
 				if ( parentIsArray )
@@ -314,15 +345,21 @@ var JSONpad_JsonStringForm = {
 		Ext.getCmp("btn_menu_file_copyJson").setHandler( MenuFunctions.copyFromJsonStringToClipboard );
 		Ext.getCmp("btn_menu_file_pasteJson").setHandler( MenuFunctions.getFromClipboardToJsonString );
 
-		Ext.getCmp("btn_menu_help_checkUpdate").setHandler( UpdateApplication.checkUpdate );
+		Ext.getCmp("btn_menu_help_checkUpdate").setHandler( function () {
+			UpdateApplication.checkUpdate(true);
+		} );
 		Ext.getCmp("btn_menu_help_about").setHandler( MenuFunctions.showAboutWindow );
 
 
 		Ext.getCmp("btn_menu_ico_loadToTree").setHandler( JsonStringFunctions.loadJsonStringToTree );
-		Ext.getCmp("btn_menu_ico_loadFromTree").setHandler( JsonStringFunctions.loadTreeToJsonString );
+		Ext.getCmp("btn_menu_ico_loadFromTree").setHandler( function () {
+			JsonStringFunctions.loadTreeToJsonString(false);
+		} );
 		Ext.getCmp("btn_menu_ico_copyJson").setHandler( MenuFunctions.copyFromJsonStringToClipboard );
 		Ext.getCmp("btn_menu_ico_pasteJson").setHandler( MenuFunctions.getFromClipboardToJsonString );
-		Ext.getCmp("btn_menu_ico_compressJson").setHandler( MenuFunctions.compressJsonString );
+		Ext.getCmp("btn_menu_ico_loadFromTreeCompressed").setHandler( function () {
+			JsonStringFunctions.loadTreeToJsonString(true);
+		} );
 
 		//@todo Das muss unbedingt dynamischer werden!
 		Ext.getCmp("JsonStringForm_ibar_samples_1").setHandler( JsonStringFunctions.setExampleToJsonString, Ext.getCmp("JsonStringForm_ibar_samples_1") );
@@ -331,5 +368,13 @@ var JSONpad_JsonStringForm = {
 	},
 
 	initEvents: function ( me ) {
+		Ext.getCmp("btn_menu_file_new").addListener("render", MenuFunctions.addStatusBarTip);
+		Ext.getCmp("btn_menu_file_quit").addListener("render", MenuFunctions.addStatusBarTip);
+
+		Ext.getCmp("btn_menu_file_copyJson").addListener("render", MenuFunctions.addStatusBarTip);
+		Ext.getCmp("btn_menu_file_pasteJson").addListener("render", MenuFunctions.addStatusBarTip);
+
+		Ext.getCmp("btn_menu_help_checkUpdate").addListener("render", MenuFunctions.addStatusBarTip);
+		Ext.getCmp("btn_menu_help_about").addListener("render", MenuFunctions.addStatusBarTip);
 	}
 };

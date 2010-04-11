@@ -5,6 +5,10 @@ var JSONpadUi_StatusBar = {
 	region: 'south',
 	id: 'JSONpad_StatusBar',
 	border: false,
+	cls: 'status-bar',
+	/*items: [
+		new Ext.Element(document.createElement("div"))
+	],*/
 	bbar: {
 		xtype: 'statusbar',
 		id: 'JSONpad_StatusBar_bbar',

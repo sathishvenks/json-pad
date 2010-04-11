@@ -6,6 +6,10 @@
 	background-image:url(../img/ico_loadFromTree.png) !important;
 }
 
+.icon_loadFromTreeCompressed {
+	background-image:url(../img/ico_loadFromTreeCompressed.png) !important;
+}
+
 .icon_copyJson {
 	background-image:url(../img/ico_copy_json.png) !important;
 }

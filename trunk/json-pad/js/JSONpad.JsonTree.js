@@ -12,6 +12,8 @@ var JsonTreeFunctions = {
 				JsonEditFunctions.disableEditor(true, true);
 			}
 		}
+
+		JsonTreeFunctions.setTreePath(jsonTree.getRootNode());
 	},
 
 	addKeyToTree: function () {
@@ -59,19 +61,14 @@ var JsonTreeFunctions = {
 
 		if ( parentNode.getDepth() == 0 )
 		{
-			newId = "1_";
+			newId = "treenode_1_";
 		}
 		else
 		{
-			selectedId = parentNode.attributes.id.split("_");
-			var lvl = parseInt( selectedId[ selectedId.length - 1 ] );
-			newId = lvl + "_";
+			newId = "treenode_" + (parentNode.getDepth()+1) + "_";
 		}
 
 		newId += ""+(count+1);
-
-		
-
 		var newChildConfig = null;
 		switch (type)
 		{
@@ -96,7 +93,8 @@ var JsonTreeFunctions = {
 				break;
 		}
 
-		newChildConfig.id = newId;
+		//newChildConfig.id = newId;
+		newChildConfig.id = Ext.id();
 		newChildConfig.text = "New" + type.toFirstUpperCase();
 		newChildConfig.listeners = {
 			"contextmenu": function(node, event)
@@ -119,6 +117,43 @@ var JsonTreeFunctions = {
 
 		selectionModel.select( newChild );
 	},
+
+	setTreePath: function (node) {
+		var path = node.getPath("text");
+		path = path.substr(1, path.length).split("/");
+		var pathIds = node.getPath();
+		pathIds = pathIds.substr(1, pathIds.length).split("/");
+
+		var rowNr = null;
+		var newStr = "";
+		var count = 0;
+
+		for (rowNr in path)
+		{
+			if (rowNr != "remove")
+			{
+				if (count == 0)
+				{
+					newStr += "/ ";
+				}
+				else if (node.id == pathIds[rowNr])
+				{
+					newStr += path[rowNr];
+				}
+				else
+				{
+					newStr += '<a href="#">' + path[rowNr] + '</a> / ';
+				}
+				count++;
+			}
+		}
+
+		/*newStr = newStr.trim();
+		newStr = newStr.substr(0, (newStr.length-1)).trim();*/
+
+		JsonStatusbarFunctions.setPanelBody( newStr );
+	},
+
 	getDefaultRootNode: function ( rootType, children ) {
 		var qTip = '';
 		var isLeaf = true;
@@ -234,6 +269,8 @@ var JSONpad_JsonTree = {
 					}
 				}
 			}
+
+			JsonTreeFunctions.setTreePath( n );
 		});
 
 

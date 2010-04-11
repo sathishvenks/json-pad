@@ -34,3 +34,8 @@
 .x-window-dlg {
 	z-index: 20010 !important;
 }
+
+div.status-bar div.x-panel-body {
+	background-color: #DFE8F6;
+	font: 10px Arial;
+}
