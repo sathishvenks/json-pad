@@ -1,17 +1,10 @@
 var JsonEditFunctions = {
 	disableEditor: function (disableKeyForm, disableObjectForm) {
 		if (disableKeyForm)
-		{
-			Ext.getCmp("JsonEdit_editKey_key").setValue("");
-			Ext.getCmp("JsonEdit_editKey_value").setValue("");
 			Ext.getCmp("JsonEdit_editKey").disable();
-		}
 
 		if (disableObjectForm)
-		{
-			Ext.getCmp("JsonEdit_editObject_index").setValue("");
 			Ext.getCmp("JsonEdit_editObject").disable();
-		}
 		
 		if (!disableObjectForm)
 		{
@@ -85,10 +78,23 @@ var JSONpad_JsonEdit = {
 			JsonEditFunctions.disableEditor(true,true)
 		} );
 
+		Ext.getCmp("JsonEdit_editKey").addListener("disable", function () {
+			Ext.getCmp("JsonEdit_editKey_key").setValue("");
+			Ext.getCmp("JsonEdit_editKey_value").setValue("");
+		});
+
+		Ext.getCmp("JsonEdit_editObject").addListener("disable", function () {
+			Ext.getCmp("JsonEdit_editObject_index").setValue("");
+		});
+
+
+		//Ext.getCmp("JsonEdit_editKey_key").addListener( "change", JsonEditFunctions.saveKeyData );
 
 		Ext.getCmp("JsonEdit_editKey_value").addListener( "change", function () {
 			if ( Ext.getCmp("JsonEdit_editKey_key").disabled )
 				Ext.getCmp("JsonEdit_editKey_key").setValue( Ext.getCmp("JsonEdit_editKey_value").getValue() );
+
+			//JsonEditFunctions.saveKeyData();
 		});
 
 		Ext.getCmp("JsonEdit_editKey_isNull").addListener('check', function (checkbox, checked) {
@@ -102,6 +108,8 @@ var JSONpad_JsonEdit = {
 			{
 				Ext.getCmp("JsonEdit_editKey_value").enable();
 			}
+
+			//JsonEditFunctions.saveKeyData();
 		});
 
 

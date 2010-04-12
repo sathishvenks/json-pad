@@ -101,11 +101,11 @@ var JsonStringFunctions = {
 			setStatusbarStatus("No valid JSON data", "error", true);
 			return;
 		}
-
+debug.dump(jsonObject, "jsonObject");
 		var rootType = getObjectType( jsonObject );
 
 		var itemsForTree = buildObjectForTree(jsonObject, [], 0, (rootType == "array"));
-
+debug.dump(itemsForTree, "itemsForTree");
 		var root = JsonTreeFunctions.getDefaultRootNode( rootType, itemsForTree );
 
 		var jsonTree = Ext.getCmp("JsonTree");
@@ -189,7 +189,7 @@ var buildJSONStringFromTree = function ( node, jsonString, lvl, compress ) {
 	node.eachChild(function (child) {
 		if ( child.hasChildNodes() )
 		{
-			if ( child.attributes.type == "array" )
+			if ( child.attributes.type == "array" && node.attributes.type != "array" )
 				jsonString += tab + spacer + '"' + child.attributes.text + '"' + pt + '[' + lb;
 			else
 			{
@@ -198,7 +198,7 @@ var buildJSONStringFromTree = function ( node, jsonString, lvl, compress ) {
 				if ( node.attributes.type != "array" )
 					jsonString += '"' + child.attributes.text + '"' + pt;
 
-				jsonString += '{' + lb;
+				jsonString += (child.attributes.type != "array" ? '{' : "[") + lb;
 			}
 
 			jsonString = tab + buildJSONStringFromTree ( child, jsonString, lvl, compress );
@@ -255,10 +255,12 @@ var buildObjectForTree = function (obj, treeObj, lvl, parentIsArray) {
 			//debug.trace(nodeObject.id);
 			if ( isObject( obj[ind] ) && obj[ind] != null )
 			{
-				if ( parentIsArray )
-					text = "[object Object] #" + ind;
-
 				itemValueType = getObjectType( obj[ind] );
+
+				if ( parentIsArray )
+					text = "[object " + itemValueType.toFirstUpperCase() + "]";
+
+				
 
 				qtip += '<div class=\'tree-qtip-cell-caption\'><b>Key:</b></div>' + text  + '<br style=\'clear: both;\'/>';
 				qtip += '<div class=\'tree-qtip-cell-caption\'><b>Typ:</b></div>'  + itemValueType + '<br style=\'clear: both;\'/>';

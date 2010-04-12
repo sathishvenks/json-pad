@@ -34,13 +34,10 @@ var JsonTreeFunctions = {
 		var parentNode = null;
 		var count = 0;
 		var newId = "";
-		var selectedId = null;
 
 		if (selectedNode == null)
 			selectedNode = jsonTree.getRootNode();
 
-
-		//debug.dump(selectedNode.attributes, "selectedNode.attributes");
 		if ( selectedNode.attributes.type == "object" || selectedNode.attributes.type == "array" )
 			parentNode = selectedNode;
 		else
@@ -75,7 +72,6 @@ var JsonTreeFunctions = {
 			case 'key':
 				newChildConfig = {
 					leaf: true,
-					draggable: true,
 					expandable: false,
 					value: "",
 					type: "string"
@@ -84,7 +80,6 @@ var JsonTreeFunctions = {
 			case 'object': case 'array':
 				newChildConfig = {
 					leaf: false,
-					draggable: false,
 					expandable: true,
 					//children: [],
 					type: type.toLowerCase(),
@@ -93,7 +88,7 @@ var JsonTreeFunctions = {
 				break;
 		}
 
-		//newChildConfig.id = newId;
+		newChildConfig.draggable = true;
 		newChildConfig.id = Ext.id();
 		newChildConfig.text = "New" + type.toFirstUpperCase();
 		newChildConfig.listeners = {
@@ -107,6 +102,11 @@ var JsonTreeFunctions = {
 				event.stopEvent();
 			}
 		};
+
+		if ( parentNode.attributes.type == "array" && (selectedNode.attributes.type == "object" || selectedNode.attributes.type == "array") )
+		{
+			newChildConfig.text = "[object " + type.toFirstUpperCase() + "]";
+		}
 
 		var newChild = new Ext.tree.TreeNode( newChildConfig );
 
@@ -142,16 +142,22 @@ var JsonTreeFunctions = {
 				}
 				else
 				{
-					newStr += '<a href="#">' + path[rowNr] + '</a> / ';
+					newStr += '<a href="#" class="tree-path-link" nodelinkid="' + pathIds[rowNr] + '">' + path[rowNr] + '</a> / ';
 				}
 				count++;
 			}
 		}
 
-		/*newStr = newStr.trim();
-		newStr = newStr.substr(0, (newStr.length-1)).trim();*/
-
 		JsonStatusbarFunctions.setPanelBody( newStr );
+
+		Ext.get(Ext.query(".tree-path-link")).on("click", function(e, el, obj) {
+			var jsonTree = Ext.getCmp("JsonTree");
+			var selectNode = jsonTree.getNodeById( el.getAttribute("nodelinkid") );
+			var selectionModel = jsonTree.getSelectionModel();
+
+			selectionModel.select( selectNode );
+		});
+		
 	},
 
 	getDefaultRootNode: function ( rootType, children ) {
@@ -249,9 +255,17 @@ var JSONpad_JsonTree = {
 			else
 			{
 				if ( n.attributes.leaf == false ) {
-					JsonEditFunctions.disableEditor(false, true);
+					var parent = n.parentNode;
 
-					Ext.getCmp("JsonEdit_editObject_index").setValue( n.attributes.text );
+					JsonEditFunctions.disableEditor(false, true);
+					
+					if (parent.attributes.type == "array") {
+						Ext.getCmp("JsonEdit_editObject_index").setValue("ARRAY VALUE");
+						Ext.getCmp("JsonEdit_editObject_index").disable();
+					} else {
+						Ext.getCmp("JsonEdit_editObject_index").setValue( n.attributes.text );
+						Ext.getCmp("JsonEdit_editObject_index").enable();
+					}
 				} else {
 					JsonEditFunctions.disableEditor(true, false);
 
@@ -280,7 +294,14 @@ var JSONpad_JsonTree = {
 
 			if (parent.attributes.type == "array")
 			{
-				node.setText( node.attributes.value );
+				if (node.attributes.type == "array" || node.attributes.type == "object")
+				{
+					node.setText( "[object " + node.attributes.type.toFirstUpperCase() + "]" );
+				}
+				else
+				{
+					node.setText( node.attributes.value );
+				}
 			}
 
 			node.select();
