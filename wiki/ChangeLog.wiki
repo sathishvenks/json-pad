@@ -1,0 +1,13 @@
+#summary All changes in version updates.
+#labels Phase-Implementation
+
+= Changelog =
+===v1.1.0===
+  * Some Bug-Fixes in the tree view
+  * Added tiny usability features
+  * Added a space where you see the path from the Tree. Not clickable at the moment but coming soon
+  * Added About in the menu
+  * Added a "Load compressed JSON string from tree" button/function
+===v1.0.1===
+  * Added automatic update check on start up
+  * Editor save functions inserted
