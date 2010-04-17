@@ -3,7 +3,3 @@
 
 *Setting a number in a JSON string which is not in decimal gives a wrong value*
   * You do not get any error window, but the value will be converted for example from: 2e+6 will be 2000000
-
-*Drag & Drop issues*
-    * Dragging a key from an object into an array will set a wrong value in the "key" field inside the editor. It doesn't matter cause the value will be right after loading from the tree to the string. but it's a fact, it's a bug :)
-    * Same like above is for putting a object into an array. No error by loading the string from tree, but it shows the wrong text inside the tree
