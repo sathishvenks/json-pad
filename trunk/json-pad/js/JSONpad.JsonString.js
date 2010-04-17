@@ -101,11 +101,11 @@ var JsonStringFunctions = {
 			setStatusbarStatus("No valid JSON data", "error", true);
 			return;
 		}
-debug.dump(jsonObject, "jsonObject");
+
 		var rootType = getObjectType( jsonObject );
 
 		var itemsForTree = buildObjectForTree(jsonObject, [], 0, (rootType == "array"));
-debug.dump(itemsForTree, "itemsForTree");
+
 		var root = JsonTreeFunctions.getDefaultRootNode( rootType, itemsForTree );
 
 		var jsonTree = Ext.getCmp("JsonTree");
@@ -245,14 +245,12 @@ var buildObjectForTree = function (obj, treeObj, lvl, parentIsArray) {
 	for (ind in obj) {
 		if (ind != "remove") {
 			var text = ind;
-			var qtip = '';
+			//var qtip = '';
 			var itemValueType = '';
 			
 			var nodeObject = new Object();
 
-			//nodeObject.id =  'treenode_' + lvl + '_' + counter;
 			nodeObject.id = Ext.id();
-			//debug.trace(nodeObject.id);
 			if ( isObject( obj[ind] ) && obj[ind] != null )
 			{
 				itemValueType = getObjectType( obj[ind] );
@@ -260,14 +258,9 @@ var buildObjectForTree = function (obj, treeObj, lvl, parentIsArray) {
 				if ( parentIsArray )
 					text = "[object " + itemValueType.toFirstUpperCase() + "]";
 
-				
-
-				qtip += '<div class=\'tree-qtip-cell-caption\'><b>Key:</b></div>' + text  + '<br style=\'clear: both;\'/>';
-				qtip += '<div class=\'tree-qtip-cell-caption\'><b>Typ:</b></div>'  + itemValueType + '<br style=\'clear: both;\'/>';
-
 				nodeObject.iconCls = 'ico_' + itemValueType;
 				nodeObject.expandable = true;
-				nodeObject.draggable = false;
+				nodeObject.draggable = true;
 				nodeObject.leaf = false;
 				nodeObject.children = buildObjectForTree(obj[ind], [], lvl, (itemValueType == "array"));
 			}
@@ -285,37 +278,14 @@ var buildObjectForTree = function (obj, treeObj, lvl, parentIsArray) {
 				if ( !isNaN(obj[ind]) && !isString(obj[ind]) && obj[ind] != null )
 					itemValueType = "number";
 
-				qtip += '<div class=\'tree-qtip-cell-caption\'><b>Key:</b></div>' + text  + '<br style=\'clear: both;\'/>';
-				qtip += '<div class=\'tree-qtip-cell-caption\'><b>Value:</b></div>' + obj[ind]  + '<br style=\'clear: both;\'/>';
-				qtip += '<div class=\'tree-qtip-cell-caption\'><b>Typ:</b></div>'  + itemValueType + '<br style=\'clear: both;\'/>';
-
-				//nodeObject.iconCls = '';
 				nodeObject.expandable = false;
 				nodeObject.draggable = true;
 				nodeObject.leaf = true;
 				nodeObject.value = obj[ind];
 			}
-			/*nodeObject.qtipCfg = new Ext.QuickTip({
-text: qtip,
-//title: 'Tip Title',
-//anchor: 'left',
-id: 'treeNodeTip',
-xtype: 'quicktip',
-showDelay: 3000
-});*/
+
 			nodeObject.text = text;
 			nodeObject.type = itemValueType;
-			nodeObject.listeners = {
-				"contextmenu": function(node, event)
-				{
-					var jsonTree = Ext.getCmp("JsonTree");
-					var selectionModel = jsonTree.getSelectionModel();
-					selectionModel.select( node );
-
-					JsonTreeStatic.contextMenu.showAt(event.getXY());
-					event.stopEvent();
-				}
-			};
 
 			treeObj.push( nodeObject );
 
@@ -329,8 +299,6 @@ showDelay: 3000
 
 var aboutWindow = "";
 
-/*aboutWindow += 'Version: ' + UpdateApplication.getApplicationVersion();
-aboutWindow += '<br />&nbsp;<br />&nbsp;<br />&nbsp;<br />';*/
 aboutWindow += '<span style="font-size: 11px;">This project started by Christopher S&ouml;llinger. ';
 aboutWindow += 'It is open source and totally<br />free under the New BSD License.<br />&nbsp;<br />';
 aboutWindow += 'You can get the latest source code files at the <a href="#" id="http://code.google.com/p/json-pad/" class="link-to-browser">Google Code Project</a> page.<br />&nbsp;<br />';
@@ -355,12 +323,64 @@ var JSONpad_JsonStringForm = {
 
 		Ext.getCmp("btn_menu_ico_loadToTree").setHandler( JsonStringFunctions.loadJsonStringToTree );
 		Ext.getCmp("btn_menu_ico_loadFromTree").setHandler( function () {
-			JsonStringFunctions.loadTreeToJsonString(false);
+			if (!JsonEditFunctions.savedKeyForm || !JsonEditFunctions.savedObjectForm)
+			{
+				Ext.MessageBox.confirm("Save before loading", "Your data is unsaved. Save before loading to tree?", function (button) {
+					if (button == "yes")
+					{
+						if (!JsonEditFunctions.savedKeyForm)
+							JsonEditFunctions.saveKeyData();
+						if (!JsonEditFunctions.savedObjectForm)
+							JsonEditFunctions.saveObjectdata();
+					}
+					if (button == "no")
+					{
+						JsonEditFunctions.setSaved(true, true);
+
+						var jsonTree = Ext.getCmp("JsonTree");
+						var selectionModel = jsonTree.getSelectionModel();
+						var selectedNode = selectionModel.getSelectedNode();
+						selectionModel.unselect (selectedNode);
+						selectionModel.select( selectedNode );
+					}
+					JsonStringFunctions.loadTreeToJsonString(false);
+				});
+			}
+			else
+			{
+				JsonStringFunctions.loadTreeToJsonString(false);
+			}
 		} );
 		Ext.getCmp("btn_menu_ico_copyJson").setHandler( MenuFunctions.copyFromJsonStringToClipboard );
 		Ext.getCmp("btn_menu_ico_pasteJson").setHandler( MenuFunctions.getFromClipboardToJsonString );
 		Ext.getCmp("btn_menu_ico_loadFromTreeCompressed").setHandler( function () {
-			JsonStringFunctions.loadTreeToJsonString(true);
+			if (!JsonEditFunctions.savedKeyForm || !JsonEditFunctions.savedObjectForm)
+			{
+				Ext.MessageBox.confirm("Save before loading", "Your data is unsaved. Save before loading to tree?", function (button) {
+					if (button == "yes")
+					{
+						if (!JsonEditFunctions.savedKeyForm)
+							JsonEditFunctions.saveKeyData();
+						if (!JsonEditFunctions.savedObjectForm)
+							JsonEditFunctions.saveObjectdata();
+					}
+					if (button == "no")
+					{
+						JsonEditFunctions.setSaved(true, true);
+
+						var jsonTree = Ext.getCmp("JsonTree");
+						var selectionModel = jsonTree.getSelectionModel();
+						var selectedNode = selectionModel.getSelectedNode();
+						selectionModel.unselect (selectedNode);
+						selectionModel.select( selectedNode );
+					}
+					JsonStringFunctions.loadTreeToJsonString(true);
+				});
+			}
+			else
+			{
+				JsonStringFunctions.loadTreeToJsonString(true);
+			}
 		} );
 
 		//@todo Das muss unbedingt dynamischer werden!

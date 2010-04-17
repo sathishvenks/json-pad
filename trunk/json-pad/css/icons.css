@@ -20,17 +20,17 @@
 
 .icon_tree_addKey {
 	background-image:url(../img/ico_add_small.png) !important;
+	background-repeat: no-repeat;
 }
-.icon_tree_addKey_disabled {
-	background-image:url(../img/ico_add_small_disabled.png) !important;
-}
-
 
 .icon_tree_delete {
 	background-image:url(../img/ico_delete_small.png) !important;
+	background-repeat: no-repeat;
 }
-.icon_tree_delete_disabled {
-	background-image:url(../img/ico_delete_small_disabled.png) !important;
+
+.icon_tree_duplicate {
+	background-image:url(../img/ico_duplicate_small.png) !important;
+	background-repeat: no-repeat;
 }
 
 

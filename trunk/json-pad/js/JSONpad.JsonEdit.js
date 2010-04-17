@@ -1,4 +1,8 @@
 var JsonEditFunctions = {
+	savedKeyForm: true,
+
+	savedObjectForm: true,
+
 	disableEditor: function (disableKeyForm, disableObjectForm) {
 		if (disableKeyForm)
 			Ext.getCmp("JsonEdit_editKey").disable();
@@ -6,14 +10,12 @@ var JsonEditFunctions = {
 		if (disableObjectForm)
 			Ext.getCmp("JsonEdit_editObject").disable();
 		
-		if (!disableObjectForm)
-		{
+		if (disableObjectForm && !disableKeyForm) {
 			Ext.getCmp("JsonEdit_editKey").setVisible(true);
 			Ext.getCmp("JsonEdit_editKey").enable();
 		}
 
-		if (!disableKeyForm)
-		{
+		if (disableKeyForm && !disableObjectForm) {
 			Ext.getCmp("JsonEdit_editObject").setVisible(true);
 			Ext.getCmp("JsonEdit_editObject").enable();
 		}
@@ -50,6 +52,8 @@ var JsonEditFunctions = {
 
 		setStatusbarBusy( false );
 		setStatusbarStatus('Saved selected key successfully', "valid", true);
+
+		JsonEditFunctions.setSaved(true, false);
 	},
 
 	saveObjectdata: function () {
@@ -64,6 +68,42 @@ var JsonEditFunctions = {
 
 		setStatusbarBusy( false );
 		setStatusbarStatus('Saved selected object/array successfully', "valid", true);
+
+		JsonEditFunctions.setSaved(false, true);
+	},
+
+	setUnsaved: function (keyForm, objectForm)
+	{
+		if (keyForm && JsonEditFunctions.savedKeyForm)
+		{
+			var keyf = Ext.getCmp("JsonEdit_editKey");
+			keyf.setTitle(keyf.title + ' *');
+			JsonEditFunctions.savedKeyForm = false;
+		}
+
+		if (objectForm && JsonEditFunctions.savedObjectForm)
+		{
+			var objectf = Ext.getCmp("JsonEdit_editObject");
+			objectf.setTitle(objectf.title + ' *');
+			JsonEditFunctions.savedObjectForm = false;
+		}
+	},
+
+	setSaved: function (keyForm, objectForm)
+	{
+		if (keyForm)
+		{
+			var keyf = Ext.getCmp("JsonEdit_editKey");
+			keyf.setTitle(keyf.title.replace(" *",""));
+			JsonEditFunctions.savedKeyForm = true;
+		}
+
+		if (objectForm)
+		{
+			var objectf = Ext.getCmp("JsonEdit_editObject");
+			objectf.setTitle(objectf.title.replace(" *",""));
+			JsonEditFunctions.savedObjectForm = true;
+		}
 	}
 };
 
@@ -83,18 +123,33 @@ var JSONpad_JsonEdit = {
 			Ext.getCmp("JsonEdit_editKey_value").setValue("");
 		});
 
-		Ext.getCmp("JsonEdit_editObject").addListener("disable", function () {
+		
+		
+
+		/*Ext.getCmp("JsonEdit_editObject").addListener("disable", function () {
 			Ext.getCmp("JsonEdit_editObject_index").setValue("");
 		});
-
+	 */
 
 		//Ext.getCmp("JsonEdit_editKey_key").addListener( "change", JsonEditFunctions.saveKeyData );
+
+		Ext.getCmp("JsonEdit_editKey_key").addListener( "keydown", function (o, e) {
+			JsonEditFunctions.setUnsaved(true, false);
+		});
+
+		Ext.getCmp("JsonEdit_editKey_value").addListener( "keydown", function (o, e) {
+			JsonEditFunctions.setUnsaved(true, false);
+		});
+
+		Ext.getCmp("JsonEdit_editObject_index").addListener( "keydown", function (o, e) {
+			JsonEditFunctions.setUnsaved(false, true);
+		});
 
 		Ext.getCmp("JsonEdit_editKey_value").addListener( "change", function () {
 			if ( Ext.getCmp("JsonEdit_editKey_key").disabled )
 				Ext.getCmp("JsonEdit_editKey_key").setValue( Ext.getCmp("JsonEdit_editKey_value").getValue() );
 
-			//JsonEditFunctions.saveKeyData();
+		//JsonEditFunctions.saveKeyData();
 		});
 
 		Ext.getCmp("JsonEdit_editKey_isNull").addListener('check', function (checkbox, checked) {
@@ -109,9 +164,14 @@ var JSONpad_JsonEdit = {
 				Ext.getCmp("JsonEdit_editKey_value").enable();
 			}
 
-			//JsonEditFunctions.saveKeyData();
+		//JsonEditFunctions.saveKeyData();
 		});
 
+		Ext.getCmp("JsonEdit_editKey_isNull").addListener( "render", function () {
+			Ext.getCmp("JsonEdit_editKey_isNull").getEl().on('click', function () {
+				JsonEditFunctions.setUnsaved(true, false);
+			});
+		} );
 
 		Ext.getCmp("JsonEdit_editKey_isNull").addListener('render', function(c) {
 			new Ext.ToolTip({

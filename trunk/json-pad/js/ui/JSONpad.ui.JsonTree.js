@@ -9,6 +9,7 @@ var JSONpadUi_JsonTree = {
 	enableDD: true,
 	id: 'JsonTree',
 	ref: 'jsonTree',
+	plugins: [new NodeMouseoverPlugin(), new NodeMouseoutPlugin()],
 	rootVisible: true,
 	tbar: {
 		xtype: 'toolbar',
@@ -38,6 +39,11 @@ var JSONpadUi_JsonTree = {
 			}
 		},
 		{
+			iconCls: 'icon_tree_duplicate',
+			tooltip: 'Duplicate selected node',
+			id: 'btn_menu_tree_duplicate'
+		},
+		{
 			iconCls: 'icon_tree_delete',
 			tooltip: 'Delete selected node',
 			id: 'btn_menu_tree_delete'
@@ -50,19 +56,7 @@ var JSONpadUi_JsonTree = {
 		draggable: false,
 		leaf: true,
 		id:'JsonTree_RootNode',
-		type: 'object',
-		//@todo Dieser Listener ist ganz böse.. Herraus aus dem ui File!
-		listeners: {
-			"contextmenu": function(node, event)
-			{
-				var jsonTree = Ext.getCmp("JsonTree");
-				var selectionModel = jsonTree.getSelectionModel();
-				selectionModel.select( node );
-
-				JsonTreeStatic.contextMenu.showAt(event.getXY());
-				event.stopEvent();
-			}
-		}
+		type: 'object'
 	},
 	loader: new Ext.tree.TreeLoader()
 };

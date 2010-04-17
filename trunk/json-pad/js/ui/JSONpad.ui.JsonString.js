@@ -148,5 +148,28 @@ var JSONpadUi_JsonString = {
 		id: 'JsonStringForm_jsonString',
 		ref: 'stringInput'
 	}
+	/*{
+		xtype: 'htmleditor',
+		anchor: '100% 100%',
+		hideLabel: true,
+		name: 'jsonString',
+		enableAlignments: false,
+		enableColors: false,
+		enableFont: false,
+		enableFontSize: false,
+		enableFormat: true,
+		enableLinks: false,
+		enableLists: false,
+		enableSourceEdit: true,
+		id: 'JsonStringForm_jsonString',
+		ref: 'stringInput'
+	}*//*{
+		xtype: 'jsonstringinput',
+		anchor: '100% 100%',
+		hideLabel: true,
+		name: 'jsonString',
+		id: 'JsonStringForm_jsonString',
+		ref: 'stringInput'
+	}*/
 	]
 };

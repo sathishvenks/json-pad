@@ -12,6 +12,7 @@ var JSONpadUi_StatusBar = {
 	bbar: {
 		xtype: 'statusbar',
 		id: 'JSONpad_StatusBar_bbar',
+		statusAlign: 'left',
 
 		// defaults to use when the status is cleared:
 		defaultText: '',
@@ -23,6 +24,7 @@ var JSONpadUi_StatusBar = {
 
 		// any standard Toolbar items:
 		items: [
+			' ', {xtype: 'tbtext', text: '', id: 'JSONpad_StatusBar_bbar_statusTextRight'}
 		/*{
 			text: 'Show Warning & Clear',
 			handler: function (){

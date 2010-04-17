@@ -46,7 +46,7 @@ var JsonStringInput = Ext.extend(Ext.form.TextArea,  {
 		this.wrap = this.el.wrap ({
 			tag: 'div',
 			cls: 'json-string-input-content',
-			html: '<p id="jsonStringInputFrame" tabindex="0" contentEditable="true"></p>'
+			html: '<iframe id="jsonStringInputFrame" width="200" height="200" tabindex="0" contentEditable="true">'
 		});
 
 		var editableContainer = Ext.get("jsonStringInputFrame");

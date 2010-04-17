@@ -3,13 +3,24 @@ var JsonStatusbarFunctions = {
 		var sb = Ext.getCmp('JSONpad_StatusBar_bbar');
 		sb.setStatus({
 			text: text,
+			iconCls: 'x-status',
 			clear: false
 		});
+	},
+
+	addStatusBarTooltipRight: function (text) {
+		var sbRight = Ext.getCmp('JSONpad_StatusBar_bbar_statusTextRight');
+		sbRight.setText(text);
 	},
 
 	clear: function () {
 		var sb = Ext.getCmp('JSONpad_StatusBar_bbar');
 		sb.clearStatus();
+	},
+
+	clearRight: function () {
+		var sbRight = Ext.getCmp('JSONpad_StatusBar_bbar_statusTextRight');
+		sbRight.setText('');
 	},
 
 	setPanelBody: function (txt) {

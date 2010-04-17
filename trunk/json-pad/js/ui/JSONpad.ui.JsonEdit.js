@@ -12,6 +12,7 @@ var JSONpadUi_JsonEdit = {
 		labelAlign: 'left',
 		layout: 'form',
 		frame: true,
+		border: false,
 		id: 'JsonEdit_editKey',
 		items: [
 		{
@@ -19,14 +20,16 @@ var JSONpadUi_JsonEdit = {
 			fieldLabel: 'Key',
 			anchor: '100%',
 			name: 'key',
-			id: 'JsonEdit_editKey_key'
+			id: 'JsonEdit_editKey_key',
+			enableKeyEvents: true
 		},
 		{
 			xtype: 'textarea',
 			fieldLabel: 'Value',
 			anchor: '100%',
 			name: 'value',
-			id: 'JsonEdit_editKey_value'
+			id: 'JsonEdit_editKey_value',
+			enableKeyEvents: true
 		},
 		{
 			xtype: 'checkbox',
@@ -57,7 +60,8 @@ var JSONpadUi_JsonEdit = {
 			fieldLabel: 'Index',
 			anchor: '100%',
 			name: 'index',
-			id: 'JsonEdit_editObject_index'
+			id: 'JsonEdit_editObject_index',
+			enableKeyEvents: true
 		}
 		],
 		buttons: [{
