@@ -1,5 +1,5 @@
 #summary All changes in version updates.
-#labels Phase-Implementation
+#labels Phase-Implementation,Featured
 
 = Changelog =
 ===v1.1.2===
