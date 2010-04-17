@@ -2,8 +2,8 @@
 <application xmlns="http://ns.adobe.com/air/application/1.5.3">
 	<id>com.JSONpad</id>
 	<publisherID>2DD2F23EEF05B1BFD979C81A698AC25753BFF3C5.1</publisherID>
-	<name>JSONpad v1.1.1</name>
-	<version>1.1.1</version>
+	<name>JSONpad v1.1.2</name>
+	<version>1.1.2</version>
 	<filename>JSONpad</filename>
 	<description>
 		<text xml:lang="en">A simple JSON Editor with a nice overview.</text>
