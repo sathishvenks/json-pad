@@ -3,3 +3,6 @@
 
 *Setting a number in a JSON string which is not in decimal gives a wrong value*
   * You do not get any error window, but the value will be converted for example from: 2e+6 will be 2000000
+
+
+* If you start drag & drop a node and the actual form is unsaved you could get some problems cause the selector works wrong here. Normally it selects the actual node if you select an other node before saving..
