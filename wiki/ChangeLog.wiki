@@ -2,6 +2,18 @@
 #labels Phase-Implementation
 
 = Changelog =
+===v1.1.2===
+  * Duplicate Tree nodes function
+  * Quickview from node in the statusbar on mouseover
+  * User confirm if data in tree is unsaved
+===v1.1.1===
+  * Added Drag&Drop support for objects&arrays
+  * The history path from the tree is now clickable
+  * Bugfixes @ Tree2JSON conversion
+===v1.1.1===
+  * Added Drag&Drop support for objects&arrays
+  * The history path from the tree is now clickable
+  * Bugfixes @ Tree2JSON conversion
 ===v1.1.0===
   * Some Bug-Fixes in the tree view
   * Added tiny usability features
