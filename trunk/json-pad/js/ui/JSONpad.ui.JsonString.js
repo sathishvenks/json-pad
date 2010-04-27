@@ -127,7 +127,7 @@ var JSONpadUi_JsonString = {
 					},{
 						text: 'Example 2',
 						id: 'JsonStringForm_ibar_samples_2',
-						example: '{\n\t"Kreditkarte": "Xema",\n\t"Nummer": "1234-5678-9012-3456",\n\t"Inhaber": {\n\t\t"Name": "Reich",\n\t\t"Vorname": "Rainer",\n\t\t"Geschlecht": "männlich",\n\t\t"Vorlieben": [ "Reiten", "Schwimmen", "Lesen" ],\n\t\t"Alter": null\n\t},\n\t"Deckung": 2e+6,\n\t"Währung": "EURO"\n}'
+						example: '{\n\tCreditCard : "MasterCard",\n\tNumber : "1234-5678-9012-3456",\n\tHolder : {\n\t\tName : "Rich",\n\t\tfirstName : "Rainer",\n\t\tsex : "männlich",\n\t\tLikes : [\n\t\t\t"Riding",\n\t\t\t"Swimming",\n\t\t\t"Reading"\n\t\t],\n\t\tAge : null\n\t},\n\tCovering : 2000000,\n\tCurrency : "EURO"\n}'
 					},{
 						text: 'Example 3',
 						id: 'JsonStringForm_ibar_samples_3',
@@ -140,14 +140,14 @@ var JSONpadUi_JsonString = {
 		]
 	},
 	items: [
-	{
+	/*{
 		xtype: 'textarea',
 		anchor: '100% 100%',
 		hideLabel: true,
 		name: 'jsonString',
 		id: 'JsonStringForm_jsonString',
 		ref: 'stringInput'
-	}
+	}*/
 	/*{
 		xtype: 'htmleditor',
 		anchor: '100% 100%',
@@ -170,6 +170,14 @@ var JSONpadUi_JsonString = {
 		name: 'jsonString',
 		id: 'JsonStringForm_jsonString',
 		ref: 'stringInput'
-	}*/
+	}*/{
+		xtype: 'ux-codemirror',
+		codeMirrorPath: 'js/extern/CodeMirror',
+		language: 'js', // possibilities: 'js', 'css', 'php', 'htm', 'html', 'xml', anything else is plain text
+		hideLabel: true,
+		name: 'jsonString',
+		id: 'JsonStringForm_jsonString',
+		ref: 'stringInput'
+	}
 	]
 };

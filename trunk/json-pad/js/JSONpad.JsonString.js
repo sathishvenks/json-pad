@@ -190,13 +190,13 @@ var buildJSONStringFromTree = function ( node, jsonString, lvl, compress ) {
 		if ( child.hasChildNodes() )
 		{
 			if ( child.attributes.type == "array" && node.attributes.type != "array" )
-				jsonString += tab + spacer + '"' + child.attributes.text + '"' + pt + '[' + lb;
+				jsonString += tab + spacer + '' + child.attributes.text + '' + pt + '[' + lb;
 			else
 			{
 				jsonString += tab + spacer;
 
 				if ( node.attributes.type != "array" )
-					jsonString += '"' + child.attributes.text + '"' + pt;
+					jsonString += '' + child.attributes.text + '' + pt;
 
 				jsonString += (child.attributes.type != "array" ? '{' : "[") + lb;
 			}
@@ -223,7 +223,7 @@ var buildJSONStringFromTree = function ( node, jsonString, lvl, compress ) {
 			if ( node.attributes.type == "array" )
 				jsonString += nodeValue;
 			else
-				jsonString += '"' + child.attributes.text + '"' + pt + '' + nodeValue;
+				jsonString += '' + child.attributes.text + '' + pt + '' + nodeValue;
 
 			jsonString += ( !child.isLast() ? "," : "" ) + lb;
 		}
