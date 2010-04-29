@@ -313,6 +313,24 @@ var JSONpad_JsonTree = {
 	},
 
 	initEvents: function ( me ) {
+		Ext.getCmp("JsonTree").on("afterRender", function (treepanel) {
+			//debug.trace(treepanel.draggable);
+			/*debug.trace(treepanel);
+				debug.trace(treepanel.ddGroup);*/
+
+			var btnDelete = Ext.getCmp("btn_menu_tree_delete");
+			new Ext.dd.DropTarget(btnDelete.el, {
+				available: true,
+				ddGroup: 'nodeDragAndDrop',
+				onDragDrop: function (e, id) {
+					debug.trace("DROPPED! + " + id);
+				},
+				endDrag: function (e) {
+					debug.trace("END-DRAG!");
+				}
+			});
+		});
+
 		Ext.getCmp("JsonTree").getSelectionModel().addListener("beforeselect", function (sel, n, o) {
 			if (!JsonEditFunctions.savedKeyForm || !JsonEditFunctions.savedObjectForm)
 			{
@@ -412,6 +430,47 @@ var JSONpad_JsonTree = {
 				JsonStatusbarFunctions.clearRight();
 		});
 
+
+		Ext.getCmp("JsonTree").addListener("startdrag", function (tree, node, event) {
+			var dd = tree.dd;
+			debug.trace("-"+dd+"-");
+
+			/*var parent = node.parentNode;
+
+			if (parent.attributes.type == "array")
+			{
+				if (node.attributes.type == "array" || node.attributes.type == "object")
+				{
+					node.setText( "[object " + node.attributes.type.toFirstUpperCase() + "]" );
+				}
+				else
+				{
+					node.setText( node.attributes.value );
+				}
+			}
+
+			node.select();*/
+			debug.trace("START DRAG & DROP EVENT");
+		});
+
+		Ext.getCmp("JsonTree").addListener("dragdrop", function (tree, node, dragDrop, event) {
+			/*var parent = node.parentNode;
+
+			if (parent.attributes.type == "array")
+			{
+				if (node.attributes.type == "array" || node.attributes.type == "object")
+				{
+					node.setText( "[object " + node.attributes.type.toFirstUpperCase() + "]" );
+				}
+				else
+				{
+					node.setText( node.attributes.value );
+				}
+			}
+
+			node.select();*/
+			debug.trace("START DRAG & DROP EVENT");
+		});
 
 		Ext.getCmp("JsonTree").addListener("enddrag", function (tree, node, event) {
 			var parent = node.parentNode;

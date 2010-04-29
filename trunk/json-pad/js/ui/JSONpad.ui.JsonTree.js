@@ -7,8 +7,16 @@ var JSONpadUi_JsonTree = {
 	collapsible: false,
 	autoScroll: true,
 	enableDD: true,
+	//draggable: true,
 	id: 'JsonTree',
 	ref: 'jsonTree',
+	//ddGroup: 'nodeDragAndDrop',
+	dragConfig: {
+		ddGroup: 'nodeDragAndDrop'
+	},
+	dropConfig: {
+		ddGroup: 'nodeDragAndDrop'
+	},
 	plugins: [new NodeMouseoverPlugin(), new NodeMouseoutPlugin()],
 	rootVisible: true,
 	tbar: {
