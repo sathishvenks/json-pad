@@ -114,6 +114,13 @@ var JSONpadUi_JsonString = {
 			},
 			'-',
 			{
+				text: 'Syntax Highlighting On/Off',
+				id: 'btn_menu_ico_codeMirror',
+				enableToggle: true,
+				pressed: true
+			},
+			'-',
+			{
 				text: 'Examples',
 				id: 'JsonStringForm_ibar_samples',
 				scale: 'large',

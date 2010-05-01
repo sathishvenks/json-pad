@@ -10,13 +10,13 @@ var JSONpadUi_JsonTree = {
 	//draggable: true,
 	id: 'JsonTree',
 	ref: 'jsonTree',
-	//ddGroup: 'nodeDragAndDrop',
-	dragConfig: {
+	ddGroup: 'nodeDragAndDrop',
+	/*dragConfig: {
 		ddGroup: 'nodeDragAndDrop'
 	},
 	dropConfig: {
 		ddGroup: 'nodeDragAndDrop'
-	},
+	},*/
 	plugins: [new NodeMouseoverPlugin(), new NodeMouseoutPlugin()],
 	rootVisible: true,
 	tbar: {

@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <application xmlns="http://ns.adobe.com/air/application/1.5.3">
-	<id>com.JSONpad</id>
-	<publisherID>2DD2F23EEF05B1BFD979C81A698AC25753BFF3C5.1</publisherID>
-	<name>JSONpad v1.1.2</name>
-	<version>1.1.2</version>
-	<filename>JSONpad</filename>
-	<description>
-		<text xml:lang="en">A simple JSON Editor with a nice overview.</text>
-		<text xml:lang="de">Ein einfacher JSON Editor mit einer Baum Übersicht.</text>
-	</description>
-	<copyright>New BSD License</copyright>
-	<customUpdateUI>false</customUpdateUI>
-	<allowBrowserInvocation>false</allowBrowserInvocation>
-	<initialWindow>
-		<content>JSONpad-air.html</content>
-		<height>700</height>
-		<width>1000</width>
-		<visible>true</visible>
-	</initialWindow>
-	<icon>
-		<image16x16>img/ico/JSONpad_16x16.png</image16x16>
-		<image32x32>img/ico/JSONpad_32x32.png</image32x32>
-		<image48x48>img/ico/JSONpad_48x48.png</image48x48>
-		<image128x128>img/ico/JSONpad_128x128.png</image128x128>
-	</icon>
+    <id>com.JSONpad</id>
+    <publisherID>2DD2F23EEF05B1BFD979C81A698AC25753BFF3C5.1</publisherID>
+    <name>JSONpad v1.2.0</name>
+    <version>1.2.0</version>
+    <filename>JSONpad</filename>
+    <description>
+	<text xml:lang="en">A simple JSON Editor with a nice overview.</text>
+	<text xml:lang="de">Ein einfacher JSON Editor mit einer Baum Übersicht.</text>
+    </description>
+    <copyright>New BSD License</copyright>
+    <customUpdateUI>false</customUpdateUI>
+    <allowBrowserInvocation>false</allowBrowserInvocation>
+    <initialWindow>
+	<content>JSONpad-air.html</content>
+	<height>700</height>
+	<width>1000</width>
+	<visible>true</visible>
+    </initialWindow>
+    <icon>
+	<image16x16>img/ico/JSONpad_16x16.png</image16x16>
+	<image32x32>img/ico/JSONpad_32x32.png</image32x32>
+	<image48x48>img/ico/JSONpad_48x48.png</image48x48>
+	<image128x128>img/ico/JSONpad_128x128.png</image128x128>
+    </icon>
 </application>

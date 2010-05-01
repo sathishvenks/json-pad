@@ -3,6 +3,14 @@
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
 		<link rel="stylesheet" type="text/css" href="js/extern/CodeMirror/css/jscolors.css">
+		<script type="text/javascript" src="js/extern/CodeMirror/js/util.js" />
+		<script type="text/javascript" src="js/extern/CodeMirror/js/stringstream.js" />
+		<script type="text/javascript" src="js/extern/CodeMirror/js/select.js" />
+		<script type="text/javascript" src="js/extern/CodeMirror/js/undo.js" />
+		<script type="text/javascript" src="js/extern/CodeMirror/js/editor.js" />
+		<script type="text/javascript" src="js/extern/CodeMirror/js/tokenize.js" />
+		<script type="text/javascript" src="js/extern/CodeMirror/js/tokenizejavascript.js" />
+		<script type="text/javascript" src="js/extern/CodeMirror/js/parsejavascript.js" />
 
 		<title></title>
 		<style type="text/css">
@@ -20,36 +28,5 @@
 		</style>
 	</head>
 	<body contentEditable="true" class="editbox" spellcheck="false" style="border-width: 0pt;">
-		<script type="text/javascript">
-			function getHash() {
-				var hash = window.location.hash;
-				return hash.substring(1); // remove #
-			}
-
-			function loadJsCss(filename){
-				var filetype = filename.split(".");
-				filetype = filetype[filetype.length -1];
-//alert(filename);
-				if (filetype=="js"){ //if filename is a external JavaScript file
-					var fileref=document.createElement('script');
-					fileref.setAttribute("type","text/javascript");
-					fileref.setAttribute("src", filename);
-				}
-				else if (filetype=="css"){ //if filename is an external CSS file
-					var fileref=document.createElement("link");
-					fileref.setAttribute("rel", "stylesheet");
-					fileref.setAttribute("type", "text/css");
-					fileref.setAttribute("href", filename);
-				}
-				if (typeof fileref!="undefined")
-					document.getElementsByTagName("head")[0].appendChild(fileref);
-			}
-
-			var hash = (getHash()).split("&");
-
-			for (var file in hash) {
-				loadJsCss(hash[file]);
-			}
-		</script>
 	</body>
 </html> 
