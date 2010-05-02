@@ -1,4 +1,6 @@
 var MenuFunctions = {
+    xml2jsonWindow: null,
+
     quitApplication: function () {
 	//@todo Derzeit geht schließen nur für Air
 	if ( Ext.isAir )
@@ -70,6 +72,61 @@ var MenuFunctions = {
 	    openUrl(href);
 	    return false;
 	});
+    },
+
+    showXML2JSONWindow: function () {
+	if(!MenuFunctions.xml2jsonWindow){
+	    MenuFunctions.xml2jsonWindow = new Ext.Window({
+		//applyTo:'hello-win',
+		layout:'fit',
+		width:500,
+		height:300,
+		closeAction:'hide',
+		plain: true,
+		modal: true,
+		title: 'Convert XML data to a JSON string',
+		items: new Ext.FormPanel({
+		    //title: 'Convert Form',
+		    layout: 'form',
+		    frame: false,
+		    border: true,
+		    hideLabel: true,
+		    id: 'JsonEdit_xml2jsonForm',
+		    items: [
+		    {
+			xtype: 'textarea',
+			hideLabel: true,
+			anchor: '100% 100%',
+			name: 'xmlData',
+			id: 'JsonEdit_xml2jsonForm_xmlData'
+		    }
+		    ]
+		}),
+
+		buttons: [{
+		    text:'Submit',
+		    handler: function(){
+			debug.trace("SUBMIT XML DATA!");
+			
+			var xmlData = Ext.getCmp("JsonEdit_xml2jsonForm_xmlData").getValue();
+
+			var jsonData = xmlJsonClass.xml2json(parseXml(xmlData), "  ", false);
+
+			debug.dump(jsonData, "jsonData");
+
+			Ext.getCmp("JsonStringForm_jsonString").setValue(jsonData);
+
+			MenuFunctions.xml2jsonWindow.hide();
+		    }
+		},{
+		    text: 'Close',
+		    handler: function(){
+			MenuFunctions.xml2jsonWindow.hide();
+		    }
+		}]
+	    });
+	}
+	MenuFunctions.xml2jsonWindow.show();
     },
 
     addStatusBarTip: function (item) {
@@ -190,13 +247,13 @@ var buildJSONStringFromTree = function ( node, jsonString, lvl, compress ) {
 	if ( child.hasChildNodes() )
 	{
 	    if ( child.attributes.type == "array" && node.attributes.type != "array" )
-		jsonString += tab + spacer + '' + child.attributes.text + '' + pt + '[' + lb;
+		jsonString += tab + spacer + (child.attributes.text.search(/[\W]/) != -1 ? '"' : '') + child.attributes.text + (child.attributes.text.search(/[\W]/) != -1 ? '"' : '') + pt + '[' + lb;
 	    else
 	    {
 		jsonString += tab + spacer;
 
 		if ( node.attributes.type != "array" )
-		    jsonString += '' + child.attributes.text + '' + pt;
+		    jsonString += (child.attributes.text.search(/[\W]/) != -1 ? '"' : '') + child.attributes.text + (child.attributes.text.search(/[\W]/) != -1 ? '"' : '') + pt;
 
 		jsonString += (child.attributes.type != "array" ? '{' : "[") + lb;
 	    }
@@ -223,7 +280,7 @@ var buildJSONStringFromTree = function ( node, jsonString, lvl, compress ) {
 	    if ( node.attributes.type == "array" )
 		jsonString += nodeValue;
 	    else
-		jsonString += '' + child.attributes.text + '' + pt + '' + nodeValue;
+		jsonString += (child.attributes.text.search(/[\W]/) != -1 ? '"' : '') + child.attributes.text + (child.attributes.text.search(/[\W]/) != -1 ? '"' : '') + pt + '' + nodeValue;
 
 	    jsonString += ( !child.isLast() ? "," : "" ) + lb;
 	}
@@ -300,10 +357,12 @@ var buildObjectForTree = function (obj, treeObj, lvl, parentIsArray) {
 var aboutWindow = "";
 
 aboutWindow += '<span style="font-size: 11px;">This project started by Christopher S&ouml;llinger. ';
-aboutWindow += 'It is open source and totally<br />free under the New BSD License.<br />&nbsp;<br />';
+aboutWindow += 'It is open source and totally free under the New BSD License.<br />&nbsp;<br />';
 aboutWindow += 'You can get the latest source code files at the <a href="#" id="http://code.google.com/p/json-pad/" class="link-to-browser">Google Code Project</a> page.<br />&nbsp;<br />';
 aboutWindow += '<div style="float: left; width: 70px;"><b>Contact:</b></div><a href="#" id="mailto:zerogiven@gmail.com" class="link-to-browser">zerogiven@gmail.com</a><br style="clear: both;" />';
-aboutWindow += '<div style="float: left; width: 70px;"><b>Homepage:</b></div><a href="#" id="http://jsonpad.web.gg" class="link-to-browser">http://jsonpad.web.gg</a><br style="clear: both;" />';
+aboutWindow += '<div style="float: left; width: 70px;"><b>Homepage:</b></div><a href="#" id="http://www.jsonpad.co.cc/" class="link-to-browser">http://www.jsonpad.co.cc</a><br style="clear: both;" />';
+aboutWindow += '<div style="float: left; width: 70px;"><b>Blog:</b></div><a href="#" id="http://jsonpad.blogspot.com/" class="link-to-browser">http://jsonpad.blogspot.com</a><br style="clear: both;" />';
+aboutWindow += '<div style="float: left; width: 70px;"><b>Twitter:</b></div><a href="#" id="http://www.twitter.com/JSONpad/" class="link-to-browser">http://www.twitter.com/JSONpad</a><br style="clear: both;" />';
 aboutWindow += '</span>';
 
 var JSONpad_JsonStringForm = {
@@ -312,6 +371,7 @@ var JSONpad_JsonStringForm = {
 	Ext.getCmp("btn_menu_file_new").setHandler( MenuFunctions.resetApplication );
 	Ext.getCmp("btn_menu_file_quit").setHandler( MenuFunctions.quitApplication );
 
+	Ext.getCmp("btn_menu_file_xml2json").setHandler( MenuFunctions.showXML2JSONWindow );
 	Ext.getCmp("btn_menu_file_copyJson").setHandler( MenuFunctions.copyFromJsonStringToClipboard );
 	Ext.getCmp("btn_menu_file_pasteJson").setHandler( MenuFunctions.getFromClipboardToJsonString );
 
@@ -353,6 +413,9 @@ var JSONpad_JsonStringForm = {
 	} );
 	Ext.getCmp("btn_menu_ico_copyJson").setHandler( MenuFunctions.copyFromJsonStringToClipboard );
 	Ext.getCmp("btn_menu_ico_pasteJson").setHandler( MenuFunctions.getFromClipboardToJsonString );
+
+	Ext.getCmp("btn_menu_ico_convertXml").setHandler( MenuFunctions.showXML2JSONWindow );
+
 	Ext.getCmp("btn_menu_ico_loadFromTreeCompressed").setHandler( function () {
 	    if (!JsonEditFunctions.savedKeyForm || !JsonEditFunctions.savedObjectForm)
 	    {
@@ -393,6 +456,7 @@ var JSONpad_JsonStringForm = {
 	Ext.getCmp("btn_menu_file_new").addListener("render", MenuFunctions.addStatusBarTip);
 	Ext.getCmp("btn_menu_file_quit").addListener("render", MenuFunctions.addStatusBarTip);
 
+	Ext.getCmp("btn_menu_file_xml2json").addListener("render", MenuFunctions.addStatusBarTip);
 	Ext.getCmp("btn_menu_file_copyJson").addListener("render", MenuFunctions.addStatusBarTip);
 	Ext.getCmp("btn_menu_file_pasteJson").addListener("render", MenuFunctions.addStatusBarTip);
 

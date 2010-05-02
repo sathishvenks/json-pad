@@ -977,7 +977,8 @@ var Editor = (function(){
         }
         else {
           node.style.fontWeight = "bold";
-          node.style.color = ok ? "#8F8" : "#F88";
+	  node.style.fontSize = "9pt";
+          node.style.color = ok ? "#FF0000" : "#0000FF";
         }
       }
       function unhighlight(node) {
@@ -987,6 +988,7 @@ var Editor = (function(){
         }
         else {
           node.style.fontWeight = "";
+	  node.style.fontSize = "10pt";
           node.style.color = "";
         }
       }
