@@ -140,13 +140,14 @@ var CodeMirror = (function(){
     else {
       frame.src = "javascript:false";
     }*/
-		frame.src = "../../../source.html";
+	    //alert(options.lang);
+		frame.src = "../../../source-" + options.lang + ".html";
 		/*forEach(options.basefiles.concat(options.parserfile).concat(options.stylesheet),
 			function(file) {
 				var filetype = file.split(".");
 				filetype = filetype[filetype.length -1];
-				frame.src += (filetype == "js" ? options.path : "") + file + "&";
-
+				//frame.src += (filetype == "js" ? options.path : "") + file + "&";
+//alert((filetype == "js" ? options.path : "") + file + "&");
 			}); */
 
 		if (place.appendChild) place.appendChild(div);

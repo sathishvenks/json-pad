@@ -198,7 +198,18 @@ var JSONpadUi_JsonString = {
 	hideLabel: true,
 	name: 'jsonString',
 	id: 'JsonStringForm_jsonString',
-	ref: 'stringInput'
+	ref: 'stringInput',
+	initCallBackFn: function (me) {
+	    debug.trace("CALLBACK")
+	    var formPanel = Ext.getCmp("JsonStringForm");
+	    formPanel.setWidth(formPanel.getWidth()-1);
+
+	    if (JSONpadAir.settings.syntax_hl == "false")
+	    {
+		Ext.getCmp("btn_menu_ico_codeMirror").toggle(false, true);
+		me.hideCodeMirror();
+	    }
+	}
     }
     ]
 };

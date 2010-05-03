@@ -79,11 +79,12 @@ var MenuFunctions = {
 	    MenuFunctions.xml2jsonWindow = new Ext.Window({
 		//applyTo:'hello-win',
 		layout:'fit',
-		width:500,
-		height:300,
+		width:700,
+		height:500,
 		closeAction:'hide',
 		plain: true,
 		modal: true,
+		id: 'JsonEdit_xml2jsonWindow',
 		title: 'Convert XML data to a JSON string',
 		items: new Ext.FormPanel({
 		    //title: 'Convert Form',
@@ -94,11 +95,59 @@ var MenuFunctions = {
 		    id: 'JsonEdit_xml2jsonForm',
 		    items: [
 		    {
-			xtype: 'textarea',
+			/*xtype: 'textarea',
 			hideLabel: true,
 			anchor: '100% 100%',
 			name: 'xmlData',
-			id: 'JsonEdit_xml2jsonForm_xmlData'
+			id: 'JsonEdit_xml2jsonForm_xmlData'*/
+			xtype: 'ux-codemirror',
+			codeMirrorPath: 'js/extern/CodeMirror',
+			language: 'xml', // possibilities: 'js', 'css', 'php', 'htm', 'html', 'xml', anything else is plain text
+			hideLabel: true,
+			anchor: '100% 100%',
+			name: 'xmlData',
+			id: 'JsonEdit_xml2jsonForm_xmlData',
+			resizeCallBackFn: function (me) {
+			    var el = Ext.select('.'+me.id, true);
+			    var lineNumbersEl = Ext.select("."+me.id+" ~ div", true);
+
+			    var win = Ext.get("JsonEdit_xml2jsonForm");
+			    var width = win.getWidth();
+			    var height = win.getHeight();
+
+			    if (el){
+				if (me.initialized) {
+debug.trace("LINE NR WIDTH: "+lineNumbersEl.elements[0].getWidth());
+				    if ( lineNumbersEl && count(lineNumbersEl.elements) && width )
+					width = width - lineNumbersEl.elements[0].getWidth();
+				}
+
+				debug.trace("WIDTH::"+width);
+
+				for (var i=0; i< el.elements.length; i++)
+				{
+				    if (width && !height)
+					el.elements[i].setWidth(width);
+				    else if (!width && height)
+					el.elements[i].setHeight(height);
+				    else if (width && height)
+					el.elements[i].setSize(width-3, height-1);
+
+				    lineNumbersEl.elements[i].setHeight(height);
+				}
+			    }
+			},
+			initCallBackFn: function (me) {
+			    /*debug.trace("CALLBACK")*/
+			    var formPanel = Ext.getCmp("JsonEdit_xml2jsonWindow");
+			    formPanel.setWidth(formPanel.getWidth()-1);
+
+			/*if (JSONpadAir.settings.syntax_hl == "false")
+			    {
+				Ext.getCmp("btn_menu_ico_codeMirror").toggle(false, true);
+				me.hideCodeMirror();
+			    }*/
+			}
 		    }
 		    ]
 		}),
@@ -106,13 +155,13 @@ var MenuFunctions = {
 		buttons: [{
 		    text:'Submit',
 		    handler: function(){
-			debug.trace("SUBMIT XML DATA!");
+			//debug.trace("SUBMIT XML DATA!");
 			
 			var xmlData = Ext.getCmp("JsonEdit_xml2jsonForm_xmlData").getValue();
+			xmlData = parseXml(xmlData);
+			var jsonData = xmlJsonClass.xml2json(xmlData, "  ", false);
 
-			var jsonData = xmlJsonClass.xml2json(parseXml(xmlData), "  ", false);
-
-			debug.dump(jsonData, "jsonData");
+			//debug.dump(jsonData, "jsonData");
 
 			Ext.getCmp("JsonStringForm_jsonString").setValue(jsonData);
 
@@ -126,6 +175,28 @@ var MenuFunctions = {
 		}]
 	    });
 	}
+
+	var value = Ext.getCmp("JsonStringForm_jsonString").getValue();
+
+	if (value != "")
+	{
+	    try
+	    {
+		var jsonObject = Ext.util.JSON.decode(value);
+	    }
+	    catch (e)
+	    {
+		setStatusbarStatus("No valid JSON data", "error", true);
+		return;
+	    }
+
+	    var xmlData = xmlJsonClass.json2xml(jsonObject, "  ");
+
+	    debug.dump(xmlData, "xmlData");
+
+	    Ext.getCmp("JsonEdit_xml2jsonForm_xmlData").setValue(xmlData);
+	}
+
 	MenuFunctions.xml2jsonWindow.show();
     },
 

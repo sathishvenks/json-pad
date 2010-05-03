@@ -4,6 +4,8 @@ Ext.ux.form.CodeMirror = Ext.extend(Ext.form.TextArea, {
     language: 'txt',
     codeMirrorHidden: false,
     codeMirrorPath: null, // should be path to code mirror on your server!
+    initCallBackFn: null,
+    resizeCallBackFn: null,
     initComponent: function() {
 	if (this.codeMirrorPath === null) {
 	    throw 'Ext.ux.form.CodeMirror: codeMirrorPath required';
@@ -13,21 +15,44 @@ Ext.ux.form.CodeMirror = Ext.extend(Ext.form.TextArea, {
 	this.addEvents('initialize');
 	this.on({
 	    resize: function(ta, width, height) {
-		var el = Ext.select('.'+this.id, true);
-		var lineNumbersEl = Ext.get(Ext.query('.CodeMirror-line-numbers'));
+		if (this.resizeCallBackFn)
+		    this.resizeCallBackFn(this);
+		else {
+		    var el = Ext.select('.'+this.id, true);
+		    var lineNumbersEl = Ext.select("."+this.id+" ~ div", true);
 
-		if (el){
-		    if (this.initialized) {
-			if (lineNumbersEl)
-			    var lnSize = lineNumbersEl.getSize();
+		    if (!width)
+			width = ta.getWidth();
+		    if (!height)
+			height = ta.getHeight();
 
-			width = width - lnSize.el.getWidth();
+		    debug.trace("WIDTH?? "+ta.getWidth());
+
+
+		    debug.trace("RESIZE! : " + width + " x " + height);
+		    if (el){
+			if (this.initialized) {
+			    debug.trace("."+this.id+" ~ div BLUB:"+$("."+this.id+" ~ div").html());
+			    debug.trace("WIDTH::"+lineNumbersEl.elements[0].getWidth());
+
+			    if ( lineNumbersEl && count(lineNumbersEl.elements) && width )
+				width = width - lineNumbersEl.elements[0].getWidth();
+			}
+
+			debug.trace("WIDTH::"+width);
+
+			for (var i=0; i< el.elements.length; i++)
+			{
+			    if (width && !height)
+				el.elements[i].setWidth(width);
+			    else if (!width && height)
+				el.elements[i].setHeight(height);
+			    else if (width && height)
+				el.elements[i].setSize(width, height);
+
+			    lineNumbersEl.elements[i].setHeight(height);
+			}
 		    }
-
-		    debug.trace("Height? : "+height);
-
-		    for (var i=0; i< el.elements.length; i++)
-			el.elements[i].setSize(width, height);
 		}
 	    },
 	    afterrender: function() {
@@ -93,29 +118,18 @@ Ext.ux.form.CodeMirror = Ext.extend(Ext.form.TextArea, {
 			parserConfig: {
 			    json: true
 			},
+			lang: me.language.toLowerCase(),
 			initCallback: function() {
 			    me.initialized = true;
 			    me.fireEvent('initialize', true);
 
 			    //@todo Very bad! i have a width bug with the codemirror
 			    //iframe so i've to set width from panel after initialized..
-			    var formPanel = Ext.getCmp("JsonStringForm");
-			    formPanel.setWidth(formPanel.getWidth()-1);
-
-			    if (JSONpadAir.settings.syntax_hl == "false")
-			    {
-				Ext.getCmp("btn_menu_ico_codeMirror").toggle(false, true);
-				me.hideCodeMirror();
-			    }
+			    if (me.initCallBackFn != null)
+				me.initCallBackFn(me);
 			}
 		    });
 		}).defer(100);
-
-	    /*(function() {
-		    me.fireEvent('resize', true);
-		}).defer(10000);
-*/
-	    //me.codeEditor.setCode("\n<br />");
 	    }
 	});
     },
@@ -179,7 +193,7 @@ Ext.ux.form.CodeMirror = Ext.extend(Ext.form.TextArea, {
 	textareaEl.setVisibilityMode(Ext.Element.DISPLAY);
 	iframeEl.setVisibilityMode(Ext.Element.DISPLAY);
 
-debug.trace("-"+this.getTextareaValue());
+	debug.trace("-"+this.getTextareaValue());
 	
 
 	textareaEl.setVisible(false);

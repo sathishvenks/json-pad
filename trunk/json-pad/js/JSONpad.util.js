@@ -65,9 +65,17 @@ function count (mixed_var, mode) {
 
 function parseXml(xml) {
     var dom = null;
+    var parser = null;
     if (window.DOMParser) {
 	try {
-	    dom = (new DOMParser()).parseFromString(xml, "text/xml");
+	    parser = new DOMParser();
+	    dom = parser.parseFromString(xml, "text/xml");
+	    /*alert(dom.documentElement.childNodes[0].childNodes[0].nodeName);
+	    if (dom.documentElement.nodeName=="parsererror")
+	    {
+		alert(dom.documentElement.childNodes[0].nodeValue);
+		return(null);
+	    }*/
 	}
 	catch (e) {
 	    dom = null;
@@ -77,8 +85,8 @@ function parseXml(xml) {
 	try {
 	    dom = new ActiveXObject('Microsoft.XMLDOM');
 	    dom.async = false;
-	    /*if (!dom.loadXML(xml)) // parse error ..
-		window.alert(dom.parseError.reason + dom.parseError.srcText);*/
+	    if (!dom.loadXML(xml)) // parse error ..
+		alert("1"+dom.parseError.reason + dom.parseError.srcText);
 	}
 	catch (e) {
 	    dom = null;
