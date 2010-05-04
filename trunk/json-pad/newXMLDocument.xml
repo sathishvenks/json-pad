@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root>
+  <CreditCard>MasterCard</CreditCard>
+  <Number>1234-5678-9012-3456</Number>
+  <Holder>
+    <Name>Rich</Name>
+    <firstName>Rainer</firstName>
+    <sex>männlich</sex>
+    <Likes>Riding</Likes>
+    <Likes>Swimming</Likes>
+    <Likes>Reading</Likes>
+  <Age/>
+  </Holder>
+  <Covering>2000000</Covering>
+  <Currency>EURO</Currency>
+</root>
