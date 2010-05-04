@@ -2,6 +2,11 @@
 #labels Phase-Implementation,Featured
 
 = Changelog =
+===v1.2.0===
+    * Added Syntax Highlighting Feature with CodeMirror (http://marijn.haverbeke.nl/codemirror/)
+    * Drag &amp; Drop delete &amp; duplicate nodes
+    * Convert XML data to a JSON string and back with json2xml and xml2json (http://goessner.net/download/prj/jsonxml/)
+    * Added a settings.xml file at the moment just the remember if you turned syntax highlighting on or off at the application startup
 ===v1.1.2===
   * Duplicate Tree nodes function
   * Quickview from node in the statusbar on mouseover
