@@ -1,4 +1,4 @@
-#labels Deprecated
+#labels Phase-Implementation
 =Small Ideas=
 
   # Format Button (better than always reloading from tree if you just need to format it)
@@ -21,7 +21,7 @@
 .
   
   * *JSONlint/JSlinz*
-  Include a validation method for JSON strings based on JSONlint >http://www.jsonlint.com/< or JSlint >http://www.jslint.com/<
+  Include a validation method for JSON strings based on JSONlint http://www.jsonlint.com/ or JSlint http://www.jslint.com/
 .
   
   * *XML Validator*
