@@ -144,15 +144,15 @@ var JSONpadUi_JsonString = {
 		    items: [{
 			text: 'Example 1',
 			id: 'JsonStringForm_ibar_samples_1',
-			example: '{\n\t"Key": "value"\n}'
+			example: '{\n\tKey: "value"\n}'
 		    },{
 			text: 'Example 2',
 			id: 'JsonStringForm_ibar_samples_2',
-			example: '{\n\tCreditCard : "MasterCard",\n\tNumber : "1234-5678-9012-3456",\n\tHolder : {\n\t\tName : "Rich",\n\t\tfirstName : "Rainer",\n\t\tsex : "männlich",\n\t\tLikes : [\n\t\t\t"Riding",\n\t\t\t"Swimming",\n\t\t\t"Reading"\n\t\t],\n\t\tAge : null\n\t},\n\tCovering : 2000000,\n\tCurrency : "EURO"\n}'
+			example: '{\n\tCreditCard : "MasterCard",\n\tNumber : "1234-5678-9012-3456",\n\tHolder : {\n\t\tName : "Rich",\n\t\tfirstName : "Rainer",\n\t\tsex : "male",\n\t\tLikes : [\n\t\t\t"Riding",\n\t\t\t"Swimming",\n\t\t\t"Reading"\n\t\t],\n\t\tAge : null\n\t},\n\tCovering : 2000000,\n\tCurrency : "EURO"\n}'
 		    },{
 			text: 'Example 3',
 			id: 'JsonStringForm_ibar_samples_3',
-			example: '{\n\t"MyObject": {\n\t\t"MyKey": "with value"\n\t},\n\t"MyArray": ["Value1", "Value2"]\n}'
+			example: '{\n\tMyObject: {\n\t\tMyKey: "with value"\n\t},\n\tMyArray: ["Value1", "Value2"]\n}'
 		    }]
 		}
 	    }
@@ -160,38 +160,7 @@ var JSONpadUi_JsonString = {
 	}
 	]
     },
-    items: [
-    /*{
-		xtype: 'textarea',
-		anchor: '100% 100%',
-		hideLabel: true,
-		name: 'jsonString',
-		id: 'JsonStringForm_jsonString',
-		ref: 'stringInput'
-	}*/
-    /*{
-		xtype: 'htmleditor',
-		anchor: '100% 100%',
-		hideLabel: true,
-		name: 'jsonString',
-		enableAlignments: false,
-		enableColors: false,
-		enableFont: false,
-		enableFontSize: false,
-		enableFormat: true,
-		enableLinks: false,
-		enableLists: false,
-		enableSourceEdit: true,
-		id: 'JsonStringForm_jsonString',
-		ref: 'stringInput'
-	}*//*{
-		xtype: 'jsonstringinput',
-		anchor: '100% 100%',
-		hideLabel: true,
-		name: 'jsonString',
-		id: 'JsonStringForm_jsonString',
-		ref: 'stringInput'
-	}*/{
+    items: [{
 	xtype: 'ux-codemirror',
 	codeMirrorPath: 'js/extern/CodeMirror',
 	language: 'js', // possibilities: 'js', 'css', 'php', 'htm', 'html', 'xml', anything else is plain text
@@ -204,12 +173,10 @@ var JSONpadUi_JsonString = {
 	    var formPanel = Ext.getCmp("JsonStringForm");
 	    formPanel.setWidth(formPanel.getWidth()-1);
 
-	    if (JSONpadAir.settings.syntax_hl == "false")
-	    {
+	    if (JSONpadAir.settings.syntax_hl == "false") {
 		Ext.getCmp("btn_menu_ico_codeMirror").toggle(false, true);
 		me.hideCodeMirror();
 	    }
 	}
-    }
-    ]
+    }]
 };

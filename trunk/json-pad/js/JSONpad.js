@@ -45,6 +45,6 @@ JSONpad.app = function() {
 
 Ext.onReady(JSONpad.app.init, JSONpad.app);
 
-air.Introspector.Console.info();
+//air.Introspector.Console.info();
 
 JSONpadAir.init();

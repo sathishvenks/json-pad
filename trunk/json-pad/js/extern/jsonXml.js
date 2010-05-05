@@ -38,7 +38,7 @@ var xmlJsonClass={
 				}
 				else{
 					for(i=0,n=v.length;i<n;i+=1){
-						var sXml=ind+toXml(v[i],name,ind+"\t")+"\n";
+						var sXml=ind+toXml(v[i],name,ind+"\t")+"";
 						xml+=sXml;
 					}
 				}
@@ -57,12 +57,7 @@ var xmlJsonClass={
 						hasChild=true;
 					}
 				}
-				xml+=hasChild?">\n":"/>\n";
-				if (name == "note")
-				{
-					debug.trace("NOTE! == "+xml+"-");
-				}
-				
+				xml+=hasChild?">\n":"/>";
 				if(hasChild){
 					for(m in v)if(v.hasOwnProperty(m)){
 						if(m==="#text"){
@@ -85,13 +80,13 @@ var xmlJsonClass={
 			}
 			else{
 				if(v.toString()==="\"\""||v.toString().length===0){
-					xml+=ind+"<"+name+">__EMPTY_STRING_</"+name+">";
+					xml+=ind+"<"+name+">__EMPTY_STRING_</"+name+">\n";
 				}
 				else{
-					xml+=ind+"<"+name+">"+v.toString()+"</"+name+">";
+					xml+=ind+"<"+name+">"+v.toString()+"</"+name+">\n";
 				}
 			}
-			return xml+"\n";
+			return xml;
 		};
 
 		var xml="";
@@ -194,7 +189,7 @@ var xmlJsonClass={
 		return o;
 	},
 	toJson:function(o,name,ind,quotePropName){
-		var json=name?((quotePropName || name.search(/[\W]/) != -1 ? "\"" : "") +name+(quotePropName || name.search(/[\W]/) != -1 ? "\"" : "")):"";
+		var json=name?((quotePropName || !validJsonKey(name) ? "\"" : "") +name+(quotePropName || !validJsonKey(name) ? "\"" : "")):"";
 		if(o==="[]"){
 			json+=(name?":[]":"[]");
 		}

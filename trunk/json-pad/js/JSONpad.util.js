@@ -70,7 +70,7 @@ function parseXml(xml) {
 	try {
 	    parser = new DOMParser();
 	    dom = parser.parseFromString(xml, "text/xml");
-	    /*alert(dom.documentElement.childNodes[0].childNodes[0].nodeName);
+	/*alert(dom.documentElement.childNodes[0].childNodes[0].nodeName);
 	    if (dom.documentElement.nodeName=="parsererror")
 	    {
 		alert(dom.documentElement.childNodes[0].nodeValue);
@@ -95,6 +95,15 @@ function parseXml(xml) {
     /*else
 	alert("oops");*/
     return dom;
+}
+
+function validJsonKey(key) {
+    if (key.search(/[\W]/) != -1) return false;
+    if (key.search(/protected/) != -1) return false;
+    if (key.search(/class/) != -1) return false;
+    if (key.search(/var/) != -1) return false;
+
+    return true;
 }
 
 var debug = {

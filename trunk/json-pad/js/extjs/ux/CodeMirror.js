@@ -26,20 +26,10 @@ Ext.ux.form.CodeMirror = Ext.extend(Ext.form.TextArea, {
 		    if (!height)
 			height = ta.getHeight();
 
-		    debug.trace("WIDTH?? "+ta.getWidth());
-
-
-		    debug.trace("RESIZE! : " + width + " x " + height);
 		    if (el){
-			if (this.initialized) {
-			    debug.trace("."+this.id+" ~ div BLUB:"+$("."+this.id+" ~ div").html());
-			    debug.trace("WIDTH::"+lineNumbersEl.elements[0].getWidth());
+			if ( this.initialized && !this.codeMirrorHidden && lineNumbersEl && count(lineNumbersEl.elements) && width )
+			    width = width - lineNumbersEl.elements[0].getWidth();
 
-			    if ( lineNumbersEl && count(lineNumbersEl.elements) && width )
-				width = width - lineNumbersEl.elements[0].getWidth();
-			}
-
-			debug.trace("WIDTH::"+width);
 
 			for (var i=0; i< el.elements.length; i++)
 			{
@@ -123,8 +113,6 @@ Ext.ux.form.CodeMirror = Ext.extend(Ext.form.TextArea, {
 			    me.initialized = true;
 			    me.fireEvent('initialize', true);
 
-			    //@todo Very bad! i have a width bug with the codemirror
-			    //iframe so i've to set width from panel after initialized..
 			    if (me.initCallBackFn != null)
 				me.initCallBackFn(me);
 			}
@@ -172,8 +160,8 @@ Ext.ux.form.CodeMirror = Ext.extend(Ext.form.TextArea, {
     },
     hideCodeMirror: function () {
 	var me = this;
-	var iframeEl = Ext.get(Ext.query(".CodeMirror-wrapping"));
-	var textareaEl = Ext.get(Ext.query("textarea#JsonStringForm_jsonString"));
+	var iframeEl = Ext.select('.'+this.id, true);
+	var textareaEl = Ext.select("textarea#" + me.id, true);
 		
 	textareaEl.setVisibilityMode(Ext.Element.DISPLAY);
 	iframeEl.setVisibilityMode(Ext.Element.DISPLAY);
@@ -191,10 +179,7 @@ Ext.ux.form.CodeMirror = Ext.extend(Ext.form.TextArea, {
 	var textareaEl = Ext.get(Ext.query("textarea#JsonStringForm_jsonString"));
 
 	textareaEl.setVisibilityMode(Ext.Element.DISPLAY);
-	iframeEl.setVisibilityMode(Ext.Element.DISPLAY);
-
-	debug.trace("-"+this.getTextareaValue());
-	
+	iframeEl.setVisibilityMode(Ext.Element.DISPLAY);	
 
 	textareaEl.setVisible(false);
 	iframeEl.setVisible(true);

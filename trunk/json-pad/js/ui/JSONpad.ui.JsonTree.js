@@ -7,16 +7,12 @@ var JSONpadUi_JsonTree = {
 	collapsible: false,
 	autoScroll: true,
 	enableDD: true,
-	//draggable: true,
 	id: 'JsonTree',
 	ref: 'jsonTree',
 	ddGroup: 'nodeDragAndDrop',
-	/*dragConfig: {
-		ddGroup: 'nodeDragAndDrop'
-	},
-	dropConfig: {
-		ddGroup: 'nodeDragAndDrop'
-	},*/
+	loader: new Ext.tree.TreeLoader({
+		preloadChildren: true
+	}),
 	plugins: [new NodeMouseoverPlugin(), new NodeMouseoutPlugin()],
 	rootVisible: true,
 	tbar: {
@@ -65,6 +61,5 @@ var JSONpadUi_JsonTree = {
 		leaf: true,
 		id:'JsonTree_RootNode',
 		type: 'object'
-	},
-	loader: new Ext.tree.TreeLoader()
+	}
 };
