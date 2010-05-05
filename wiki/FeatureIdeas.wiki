@@ -5,7 +5,7 @@
   # Compress Button (same like format button here)
   # Un-/Quote keys in json string
   # Statusbar for editor panel
-  # Show/Hide CodeMirror at XML conversion
+  # Show/Hide Code-Mirror at XML conversion
   # Format Button for XML conversion
   # Statusbar for XML editor
 
