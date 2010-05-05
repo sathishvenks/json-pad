@@ -1,0 +1,43 @@
+#labels Deprecated
+=Small Ideas=
+
+  # Format Button (better than always reloading from tree if you just need to format it)
+  # Compress Button (same like format button here)
+  # Un-/Quote keys in json string
+  # Statusbar for editor panel
+  # Show/Hide CodeMirror at XML conversion
+  # Format Button for XML conversion
+  # Statusbar for XML editor
+
+
+=Big Ideas=
+
+
+===Tabbed Editor===
+A feature for opening "more" json strings. Tabbing the whole editor could be an idea. Every new tab a new instance of the editor.
+
+===Compare 2 JSON strings===
+With the tab feature we could make it possible to compare two strings in an extra tab (like at netbeans).
+
+===JSONlint/JSlinz===
+Include a validation method for JSON strings based on JSONlint >http://www.jsonlint.com/< or JSlint >http://www.jslint.com/<
+
+
+===XML Validator===
+XML validation (http://www.w3schools.com/xml/xml_validator.asp)
+
+
+===csv2json and back===
+Existing ruby script: http://github.com/darwin/csv2json/tree/0436af721f5c46e0f7491d4b73df4d6a0e016e51
+Based on this it would be wonderful getting a js script
+
+
+===JSONpath===
+If you know XPath you know what JSONpath is... http://goessner.net/articles/JsonPath/
+A filter method inside the tree would be nice i think
+
+
+===JsonML===
+JSON Markup Language. Could be nice if you can use it in the editor. Maybe as conversion or better as second accepted json syntax format. but than i need a parser and a syntax-highlight-parser too.
+http://www.ibm.com/developerworks/library/x-jsonml/
+http://jsonml.org/
