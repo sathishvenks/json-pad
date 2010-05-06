@@ -1,8 +1,8 @@
 #labels Phase-Implementation
 =Small Ideas=
 
-  # Format Button (better than always reloading from tree if you just need to format it)
-  # Compress Button (same like format button here)
+  # Format Button (better than always reloading from tree if you just need to format it) http://jsbeautifier.org/
+  # Compress Button (same like format button here) http://dean.edwards.name/packer/
   # Un-/Quote keys in json string
   # Statusbar for editor panel
   # Show/Hide Code-Mirror at XML conversion
