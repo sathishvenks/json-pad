@@ -2,6 +2,11 @@
 #labels Phase-Implementation,Featured
 
 = Changelog =
+===v1.2.1===
+    * Compress JSON string button based on jsmin by Douglas Crockford (http://javascript.crockford.com/jsmin.html)
+    * Format button based on the JSON stringify function from json2 parser (http://www.json.org/js.html)
+    * Improved the performance loading big trees back to json string
+    * Added quotes back to index names for a valid json string
 ===v1.2.0===
     * Added Syntax Highlighting Feature with Code-Mirror (http://marijn.haverbeke.nl/codemirror/)
     * Drag &amp; Drop delete &amp; duplicate nodes
