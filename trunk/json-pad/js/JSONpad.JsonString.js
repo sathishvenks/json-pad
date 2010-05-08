@@ -16,17 +16,26 @@ var MenuFunctions = {
     },
 
     compressJsonString: function () {
-	var txt = Ext.getCmp("JsonStringForm_jsonString").getValue();
-	var row = null;
-	var txtArray = txt.split("\n");
-	var txtString = "";
-	for (row in txtArray)
-	{
-	    if (row != "remove")
-		txtString += String(txtArray[row]).trim();
-	}
+	var string = Ext.getCmp("JsonStringForm_jsonString").getValue();
+	var minString = jsmin("", string, 3);
 
-	Ext.getCmp("JsonStringForm_jsonString").setValue( txtString );
+	/*var str = "";
+	var match = null;
+	var regEx = new RegExp(/(?:"(?:[^"\\]+|\\.)*"|'(?:[^'\\]+|\\.)*')|null|true|false|[0-9]+|:|{|}|\[|\]|,|[\w]+/g);
+	while (match = regEx.exec(string)) {
+	    str += match[0];
+	}*/
+	debug.trace(minString);
+
+
+	Ext.getCmp("JsonStringForm_jsonString").setValue( minString.trim() );
+    },
+
+    formatJsonString: function () {
+	var string = Ext.getCmp("JsonStringForm_jsonString").getValue();
+	var json = JSON.parse(string);
+
+	Ext.getCmp("JsonStringForm_jsonString").setValue( JSON.stringify(json, null, '  ') );
     },
 
     copyFromJsonStringToClipboard: function () {
@@ -241,7 +250,7 @@ var JsonStringFunctions = {
 	setStatusbarBusy( false );
 	setStatusbarStatus('JSON String successfully loaded into tree view', "valid", true);
 
-	JsonStringFunctions.loadTreeToJsonString(false);
+	//JsonStringFunctions.loadTreeToJsonString(false);
     },
 
     loadTreeToJsonString: function (compress) {
@@ -260,7 +269,7 @@ var JsonStringFunctions = {
 	else
 	    jsonString += "{" + lb;
 
-	jsonString = buildJSONStringFromTree ( rootNode, jsonString, 0, compress );
+	jsonString = buildJSONStringFromTree ( rootNode, jsonString, 0, compress, true );
 
 	if ( rootNode.attributes.isArray )
 	    jsonString += "]" + lb;
@@ -281,13 +290,12 @@ var JsonStringFunctions = {
     }
 };
 
-var buildJSONStringFromTree = function ( node, jsonString, lvl, compress ) {
+var buildJSONStringFromTree = function ( node, jsonString, lvl, compress, quotes ) {
     var lb = "";
     var spacer = ""
     var pt = ":";
 
-    if (!compress)
-    {
+    if (!compress) {
 	lb = "\n";
 	spacer = "\t";
 	pt = " : "
@@ -305,18 +313,18 @@ var buildJSONStringFromTree = function ( node, jsonString, lvl, compress ) {
 	if ( child.hasChildNodes() )
 	{
 	    if ( child.attributes.type == "array" && node.attributes.type != "array" )
-		jsonString += tab + spacer + (!validJsonKey(child.attributes.text) ? '"' : '') + child.attributes.text + (child.attributes.text.search(/[\W]/) != -1 ? '"' : '') + pt + '[' + lb;
+		jsonString += tab + spacer + (!validJsonKey(child.attributes.text) || quotes ? '"' : '') + child.attributes.text + (!validJsonKey(child.attributes.text) || quotes ? '"' : '') + pt + '[' + lb;
 	    else
 	    {
 		jsonString += tab + spacer;
 
 		if ( node.attributes.type != "array" )
-		    jsonString += (!validJsonKey(child.attributes.text) ? '"' : '') + child.attributes.text + (child.attributes.text.search(/[\W]/) != -1 ? '"' : '') + pt;
+		    jsonString += (!validJsonKey(child.attributes.text) || quotes ? '"' : '') + child.attributes.text + (!validJsonKey(child.attributes.text) || quotes ? '"' : '') + pt;
 
 		jsonString += (child.attributes.type != "array" ? '{' : "[") + lb;
 	    }
 
-	    jsonString = tab + buildJSONStringFromTree ( child, jsonString, lvl, compress );
+	    jsonString = tab + buildJSONStringFromTree ( child, jsonString, lvl, compress, quotes );
 
 	    if ( child.attributes.type == "array" )
 		jsonString += tab + spacer + ']';
@@ -338,7 +346,7 @@ var buildJSONStringFromTree = function ( node, jsonString, lvl, compress ) {
 	    if ( node.attributes.type == "array" )
 		jsonString += nodeValue;
 	    else
-		jsonString += (!validJsonKey(child.attributes.text) ? '"' : '') + child.attributes.text + (!validJsonKey(child.attributes.text) ? '"' : '') + pt + '' + nodeValue;
+		jsonString += (!validJsonKey(child.attributes.text) || quotes ? '"' : '') + child.attributes.text + (!validJsonKey(child.attributes.text) || quotes ? '"' : '') + pt + '' + nodeValue;
 
 	    jsonString += ( !child.isLast() ? "," : "" ) + lb;
 	}
@@ -355,7 +363,7 @@ var buildObjectForTree = function (obj, treeObj, lvl, parentIsArray) {
     var ind = null;
     var counter = 1;
     for (ind in obj) {
-	if (ind != "remove") {
+	if (ind != "remove" && ind != "in_array") {
 	    var text = ind;
 	    //var qtip = '';
 	    var itemValueType = '';
@@ -466,12 +474,16 @@ var JSONpad_JsonStringForm = {
 		JsonStringFunctions.loadTreeToJsonString(false);
 	    }
 	} );
+
+	Ext.getCmp("btn_menu_ico_compress").setHandler( MenuFunctions.compressJsonString );
+	Ext.getCmp("btn_menu_ico_format").setHandler( MenuFunctions.formatJsonString );
+
 	Ext.getCmp("btn_menu_ico_copyJson").setHandler( MenuFunctions.copyFromJsonStringToClipboard );
 	Ext.getCmp("btn_menu_ico_pasteJson").setHandler( MenuFunctions.getFromClipboardToJsonString );
 
 	Ext.getCmp("btn_menu_ico_convertXml").setHandler( MenuFunctions.showXML2JSONWindow );
 
-	Ext.getCmp("btn_menu_ico_loadFromTreeCompressed").setHandler( function () {
+	/*Ext.getCmp("btn_menu_ico_loadFromTreeCompressed").setHandler( function () {
 	    if (!JsonEditFunctions.savedKeyForm || !JsonEditFunctions.savedObjectForm)
 	    {
 		Ext.MessageBox.confirm("Save before loading", "Your data is unsaved. Save before loading to tree?", function (button) {
@@ -499,7 +511,7 @@ var JSONpad_JsonStringForm = {
 	    {
 		JsonStringFunctions.loadTreeToJsonString(true);
 	    }
-	} );
+	} );*/
 
 	//@todo Das muss unbedingt dynamischer werden!
 	Ext.getCmp("JsonStringForm_ibar_samples_1").setHandler( JsonStringFunctions.setExampleToJsonString, Ext.getCmp("JsonStringForm_ibar_samples_1") );

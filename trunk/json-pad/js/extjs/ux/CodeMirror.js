@@ -175,8 +175,8 @@ Ext.ux.form.CodeMirror = Ext.extend(Ext.form.TextArea, {
     },
     showCodeMirror: function () {
 	var me = this;
-	var iframeEl = Ext.get(Ext.query(".CodeMirror-wrapping"));
-	var textareaEl = Ext.get(Ext.query("textarea#JsonStringForm_jsonString"));
+	var iframeEl = Ext.select('.'+this.id, true);
+	var textareaEl = Ext.select("textarea#" + me.id, true);
 
 	textareaEl.setVisibilityMode(Ext.Element.DISPLAY);
 	iframeEl.setVisibilityMode(Ext.Element.DISPLAY);	

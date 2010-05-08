@@ -158,3 +158,12 @@ var debug = {
 String.prototype.toFirstUpperCase = function() {
     return this.substring(0,1).toUpperCase() + this.substring(1, this.length).toLowerCase();
 }
+
+String.prototype.repeat = function( num ) {
+    return new Array( num + 1 ).join( this );
+}
+
+Array.prototype.in_array = function(needle) {
+    for(var i=0; i < this.length; i++) if(this[ i] === needle) return true;
+    return false;
+}

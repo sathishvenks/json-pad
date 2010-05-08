@@ -158,6 +158,8 @@ var JsonTreeFunctions = {
     setTreePath: function (node) {
 	var path = node.getPath("text");
 	path = path.substr(1, path.length).split("/");
+	debug.dump(path, "path");
+
 	var pathIds = node.getPath("id");
 
 	pathIds = pathIds.substr(1, pathIds.length).split("/");
@@ -166,9 +168,11 @@ var JsonTreeFunctions = {
 	var newStr = "";
 	var count = 0;
 
+//debug.trace(pathIds.join(","));
+
 	for (rowNr in path)
 	{
-	    if (rowNr != "remove")
+	    if (rowNr != "remove" && rowNr != "in_array")
 	    {
 		if (count == 0)
 		{
@@ -477,16 +481,16 @@ var JSONpad_JsonTree = {
 	});
 
 
-	Ext.getCmp("JsonTree_tbar_add").addListener("disable", function (btn) { btn.setIconClass("icon_tree_addKey_disabled"); });
-	Ext.getCmp("JsonTree_tbar_add").addListener("enable", function (btn) { btn.setIconClass("icon_tree_addKey"); });
-	Ext.getCmp("btn_menu_tree_duplicate").addListener("disable", function (btn) { btn.setIconClass("icon_tree_duplicate_disabled"); });
-	Ext.getCmp("btn_menu_tree_duplicate").addListener("enable", function (btn) { btn.setIconClass("icon_tree_duplicate"); });
-	Ext.getCmp("btn_menu_tree_delete").addListener("disable", function (btn) { btn.setIconClass("icon_tree_delete_disabled"); });
-	Ext.getCmp("btn_menu_tree_delete").addListener("enable", function (btn) { btn.setIconClass("icon_tree_delete"); });
+	Ext.getCmp("JsonTree_tbar_add").addListener("disable", function (btn) {btn.setIconClass("icon_tree_addKey_disabled");});
+	Ext.getCmp("JsonTree_tbar_add").addListener("enable", function (btn) {btn.setIconClass("icon_tree_addKey");});
+	Ext.getCmp("btn_menu_tree_duplicate").addListener("disable", function (btn) {btn.setIconClass("icon_tree_duplicate_disabled");});
+	Ext.getCmp("btn_menu_tree_duplicate").addListener("enable", function (btn) {btn.setIconClass("icon_tree_duplicate");});
+	Ext.getCmp("btn_menu_tree_delete").addListener("disable", function (btn) {btn.setIconClass("icon_tree_delete_disabled");});
+	Ext.getCmp("btn_menu_tree_delete").addListener("enable", function (btn) {btn.setIconClass("icon_tree_delete");});
 
-	Ext.getCmp("btn_menu_tree_context_duplicate").addListener("disable", function (btn) { btn.setIconClass("icon_tree_duplicate_disabled"); });
-	Ext.getCmp("btn_menu_tree_context_duplicate").addListener("enable", function (btn) { btn.setIconClass("icon_tree_duplicate"); });
-	Ext.getCmp("btn_menu_tree_context_delete").addListener("disable", function (btn) { btn.setIconClass("icon_tree_delete_disabled"); });
-	Ext.getCmp("btn_menu_tree_context_delete").addListener("enable", function (btn) { btn.setIconClass("icon_tree_delete"); });
+	Ext.getCmp("btn_menu_tree_context_duplicate").addListener("disable", function (btn) {btn.setIconClass("icon_tree_duplicate_disabled");});
+	Ext.getCmp("btn_menu_tree_context_duplicate").addListener("enable", function (btn) {btn.setIconClass("icon_tree_duplicate");});
+	Ext.getCmp("btn_menu_tree_context_delete").addListener("disable", function (btn) {btn.setIconClass("icon_tree_delete_disabled");});
+	Ext.getCmp("btn_menu_tree_context_delete").addListener("enable", function (btn) {btn.setIconClass("icon_tree_delete");});
     }
 }
