@@ -18,7 +18,7 @@
   With the tab feature we could make it possible to compare two strings in an extra tab (like at netbeans).
 .
   
-  * *JSONlint/JSlinz*
+  * *JSONlint/JSlint*
   Include a validation method for JSON strings based on JSONlint http://www.jsonlint.com/ or JSlint http://www.jslint.com/
 .
   
