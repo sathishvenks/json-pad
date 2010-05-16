@@ -39,7 +39,7 @@
 }
 
 .x-status-error {
-	cursor: default !important;
+	/*cursor: default !important;*/
 	font-weight: bold !important;
 	padding-top: 4px;
 }
@@ -51,4 +51,8 @@
 div.status-bar div.x-panel-body {
 	background-color: #DFE8F6;
 	font: 10px Arial;
+}
+
+.x-status-error-detail-link {
+    cursor: pointer !important;
 }

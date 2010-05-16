@@ -57,7 +57,7 @@ var xmlJsonClass={
 						hasChild=true;
 					}
 				}
-				xml+=hasChild?">\n":"/>";
+				xml+=hasChild?">\n":"/>\n";
 				if(hasChild){
 					for(m in v)if(v.hasOwnProperty(m)){
 						if(m==="#text"){
@@ -70,7 +70,7 @@ var xmlJsonClass={
 							xml+=toXml(v[m],m,ind+"\t");
 						}
 					}
-					xml+=(xml.charAt(xml.length-1)==="\n"?ind:"")+"</"+name+">";
+					xml+=(xml.charAt(xml.length-1)==="\n"?ind:"")+"</"+name+">\n";
 				}
 
 				if (name == "note")

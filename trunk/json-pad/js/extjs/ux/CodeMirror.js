@@ -4,8 +4,10 @@ Ext.ux.form.CodeMirror = Ext.extend(Ext.form.TextArea, {
     language: 'txt',
     codeMirrorHidden: false,
     codeMirrorPath: null, // should be path to code mirror on your server!
-    initCallBackFn: null,
-    resizeCallBackFn: null,
+    
+    initCallBackFn: null, // Executes right after the init from codemirror
+    onResizeCallBackFn: null, // If we need our own resize function
+
     initComponent: function() {
 	if (this.codeMirrorPath === null) {
 	    throw 'Ext.ux.form.CodeMirror: codeMirrorPath required';
@@ -15,31 +17,34 @@ Ext.ux.form.CodeMirror = Ext.extend(Ext.form.TextArea, {
 	this.addEvents('initialize');
 	this.on({
 	    resize: function(ta, width, height) {
-		if (this.resizeCallBackFn)
-		    this.resizeCallBackFn(this);
+		if (this.onResizeCallBackFn)
+		    this.onResizeCallBackFn(this);
 		else {
 		    var el = Ext.select('.'+this.id, true);
-		    var lineNumbersEl = Ext.select("."+this.id+" ~ div", true);
+		    var lineNumbersEl = Ext.select("."+this.id+" ~ div", true); // the lineNumbersEl is always the next div from the iframe
 
+		    // Sometimes it happens in air that width or height from the resize event is undefined...
 		    if (!width)
 			width = ta.getWidth();
 		    if (!height)
 			height = ta.getHeight();
+		    //...but we got it back from the container
 
 		    if (el){
-			if ( this.initialized && !this.codeMirrorHidden && lineNumbersEl && count(lineNumbersEl.elements) && width )
+			// If we find the lineNumbersEl we subtract the width
+			if ( this.initialized && !this.codeMirrorHidden && count(lineNumbersEl.elements) > 0 && width )
 			    width = width - lineNumbersEl.elements[0].getWidth();
-
 
 			for (var i=0; i< el.elements.length; i++)
 			{
-			    if (width && !height)
+			    // It should not but it could be that the width or height is undefined.. i realy have no plan why this
+			    // happens in Air. However we set what isn't undefined
+			    if (width)
 				el.elements[i].setWidth(width);
-			    else if (!width && height)
+			    if (height)
 				el.elements[i].setHeight(height);
-			    else if (width && height)
-				el.elements[i].setSize(width, height);
 
+			    // On resize we set the height for the line numbers element too
 			    lineNumbersEl.elements[i].setHeight(height);
 			}
 		    }
@@ -81,7 +86,7 @@ Ext.ux.form.CodeMirror = Ext.extend(Ext.form.TextArea, {
 		    case 'html':
 		    case 'xml':
 			parser = 'parsexml.js';
-			stylesheet = 'xmlcolors.css';
+			stylesheet = this.codeMirrorPath + '/css/xmlcolors.css';
 			break;
 		    default:
 			parser = 'parsedummy.js';
@@ -115,6 +120,9 @@ Ext.ux.form.CodeMirror = Ext.extend(Ext.form.TextArea, {
 
 			    if (me.initCallBackFn != null)
 				me.initCallBackFn(me);
+
+			    if (me.codeMirrorHidden)
+				me.hideCodeMirror();
 			}
 		    });
 		}).defer(100);

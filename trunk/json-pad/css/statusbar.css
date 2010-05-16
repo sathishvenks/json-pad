@@ -7,12 +7,15 @@
 /* StatusBar - structure */
 .x-statusbar .x-status-text {
     cursor: default;
-/*
-    height: 21px;
-    line-height: 21px;
+
+    height: 15px;
+/*    line-height: 21px;*/
     padding: 0 4px;
-*/
+
 }
+
+
+
 .x-statusbar .x-status-busy {
     padding-left: 25px !important;
     background: transparent no-repeat 3px 2px;

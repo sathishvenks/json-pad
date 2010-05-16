@@ -1,16 +1,5 @@
-console = {
-    log: air.Introspector ? air.Introspector.Console.log : function(){}
-};
-
-
-
-
-Ext.BLANK_IMAGE_URL = 'js/extjs/resources/images/default/s.gif';
-
-Ext.ns('JSONpad');
-
-JSONpad = Ext.extend(JSONpadUi, {
-    initHandler: function () {
+/*JSONpad = Ext.extend(JSONpadUi, {
+   initHandler: function () {
 	JSONpad_JsonStringForm.initHandler( this.jsonString );
 	JSONpad_JsonTree.initHandler( this.jsonTree );
 	JSONpad_JsonEdit.initHandler( this.jsonEdit );
@@ -26,8 +15,8 @@ JSONpad = Ext.extend(JSONpadUi, {
 
     initComponent: function() {
 	JSONpad.superclass.initComponent.call(this);
-	this.initHandler( this );
-	this.initEvents( this );
+	//this.initHandler( this );
+	//this.initEvents( this );
     }
 });
 
@@ -42,9 +31,9 @@ JSONpad.app = function() {
 	}
     };
 }();
-
+*/
 Ext.onReady(JSONpad.app.init, JSONpad.app);
 
-air.Introspector.Console.info();
+//air.Introspector.Console.info();
 
 JSONpadAir.init();
