@@ -9,7 +9,7 @@ var JSONpadUi_JsonTree = {
 	enableDD: true,
 	id: 'JsonTree',
 	ref: 'jsonTree',
-	ddGroup: 'nodeDragAndDrop',
+    ddGroup: 'nodeDragAndDrop',
 	loader: new Ext.tree.TreeLoader({
 		preloadChildren: true
 	}),

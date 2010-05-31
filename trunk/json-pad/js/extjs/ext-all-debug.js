@@ -11666,6 +11666,7 @@ mc.add(otherEl);
             this.suspendEvents();
             this.removeKey(key);
             this.resumeEvents();
+
         }
         if(index >= this.length){
             return this.add(key, o);
@@ -12331,6 +12332,7 @@ Ext.util.Format = function(){
             var ps = v.split('.'),
                 whole = ps[0],
                 sub = ps[1] ? '.'+ ps[1] : '.00',
+
                 r = /(\d+)(\d{3})/;
             while (r.test(whole)) {
                 whole = whole.replace(r, '$1' + ',' + '$2');
@@ -14562,6 +14564,7 @@ new Ext.FormPanel({
      * <li>field / component level</li>
      * <li>container level</li>
      * <li>{@link Ext.layout.FormLayout#labelSeparator layout level} (defaults to colon <tt>':'</tt>)</li>
+
      * </ul></div>
      * To display no separator for this field's label specify empty string ''.</p>
      * <br><p><b>Note</b>: see the note for <tt>{@link #clearCls}</tt>.</p><br>
@@ -15226,7 +15229,9 @@ Ext.Foo = Ext.extend(Ext.Bar, {
      */
     update: function(htmlOrData, loadScripts, cb) {
         var contentTarget = this.getContentTarget();
+debug.trace("typeof htmlOrData == " + typeof htmlOrData + " :: " + contentTarget);
         if (this.tpl && typeof htmlOrData !== "string") {
+debug.trace("huh?");
             this.tpl[this.tplWriteMode](contentTarget, htmlOrData || {});
         } else {
             var html = Ext.isObject(htmlOrData) ? Ext.DomHelper.markup(htmlOrData) : htmlOrData;
@@ -15512,6 +15517,7 @@ new Ext.Panel({
     title: 'The Clickable Panel',
     listeners: {
         render: function(p) {
+
             // Append the Panel to the click handler&#39;s argument list.
             p.getEl().on('click', handlePanelClick.createDelegate(null, [p], true));
         },
@@ -33889,6 +33895,7 @@ api: {
     destroy : '/controller/destroy_action'
 }
 
+
 // Alternatively, one can use the object-form to specify each API-action
 api: {
     load: {url: 'read.php', method: 'GET'},
@@ -39699,6 +39706,7 @@ Ext.MessageBox.ERROR
         progress : function(title, msg, progressText){
             this.show({
                 title : title,
+
                 msg : msg,
                 buttons: false,
                 progress:true,
@@ -46469,6 +46477,7 @@ Ext.QuickTip = Ext.extend(Ext.ToolTip, {
             var autoHide = et.getAttribute(cfg.hide, ns);
             this.activeTarget = {
                 el: t,
+
                 text: ttp,
                 width: et.getAttribute(cfg.width, ns),
                 autoHide: autoHide != "user" && autoHide !== 'false',
@@ -52911,6 +52920,7 @@ Ext.chart.TimeAxis = Ext.extend(Ext.chart.Axis, {
      * @type String
      */
     minorTimeUnit: null,
+
 
     /**
      * If true, the labels, ticks, gridlines, and other objects will snap to
@@ -64233,6 +64243,7 @@ viewConfig: {
 	    Ext.grid.GridView.superclass.constructor.call(this);
     },
 
+
     /* -------------------------------- UI Specific ----------------------------- */
 
     // private
@@ -67117,6 +67128,7 @@ Ext.grid.RowSelectionModel = Ext.extend(Ext.grid.AbstractSelectionModel,  {
 
 
     /**
+
      * Selects all rows if the selection model
      * {@link Ext.grid.AbstractSelectionModel#isLocked is not locked}.
      */

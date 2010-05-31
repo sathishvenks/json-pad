@@ -10,6 +10,7 @@
 
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
 	<link rel="stylesheet" type="text/css" href="css/icons.css" />
+	<link rel="stylesheet" type="text/css" href="css/window.css" />
 
 	<script type="text/javascript" src="js/air/AIRAliases.js"></script>
 	<script type="text/javascript" src="js/air/AIRIntrospector.js"></script>
@@ -41,6 +42,7 @@
 	<script type="text/javascript" src="js/extjs/ux/CodeMirror.js"></script>
 	<script type="text/javascript" src="js/extjs/ux/NodeMouseover.js"></script>
 	<script type="text/javascript" src="js/extjs/ux/NodeMouseout.js"></script>
+	<script type="text/javascript" src="js/extjs/ux/ClickToolTip.js"></script>
 
 
 
@@ -74,19 +76,29 @@
 	<script type="text/javascript" src="js/JP.MainTop.iconBar.js"></script>
 
 	<script type="text/javascript" src="js/JP.MainCenter.js"></script>
+	<script type="text/javascript" src="js/JP.MainCenter.Actions.js"></script>
 	<script type="text/javascript" src="js/JP.MainCenter.stringForm.js"></script>
 	<script type="text/javascript" src="js/JP.MainCenter.jsonTree.js"></script>
+	<script type="text/javascript" src="js/JP.MainCenter.jsonTree.nodeToolbar.js"></script>
+	<script type="text/javascript" src="js/JP.MainCenter.jsonTree.contextMenu.js"></script>
 	<script type="text/javascript" src="js/JP.MainCenter.editTreeForm.js"></script>
-	<script type="text/javascript" src="js/JP.MainCenter.editTreeForm.editKey.js"></script>
+	<script type="text/javascript" src="js/JP.MainCenter.editTreeForm.tabs.js"></script>
+	<script type="text/javascript" src="js/JP.MainCenter.editTreeForm.tabs.edit.js"></script>
+	<script type="text/javascript" src="js/JP.MainCenter.editTreeForm.tabs.edit.key.js"></script>
+	<script type="text/javascript" src="js/JP.MainCenter.editTreeForm.tabs.edit.object.js"></script>
 
 	<script type="text/javascript" src="js/JP.MainBottom.js"></script>
 
 	<script type="text/javascript" src="js/JP.XmlWindow.js"></script>
 	<script type="text/javascript" src="js/JP.XmlWindow.Actions.js"></script>
 	<script type="text/javascript" src="js/JP.XmlWindow.xmlForm.js"></script>
-	
 
+	<script type="text/javascript" src="js/JP.AboutWindow.js"></script>
+	<script type="text/javascript" src="js/JP.AboutWindow.Actions.js"></script>
+	
+	<script type="text/javascript" src="js/JP.ErrorWindow.js"></script>
+	<script type="text/javascript" src="js/JP.ErrorWindow.Actions.js"></script>
     </head>
-    <body>
+    <body onload="JSONpadAir.init();">
     </body>
 </html>

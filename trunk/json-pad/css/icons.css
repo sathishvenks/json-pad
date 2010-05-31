@@ -5,8 +5,15 @@
 .icon_format { background-image:url(../img/ico_format.png) !important; }
 .icon_copyJson { background-image:url(../img/ico_copy_json.png) !important; }
 .icon_pasteJson { background-image:url(../img/ico_paste_json.png) !important; }
+.icon_copy { background-image:url(../img/ico_copy.png) !important; }
+.icon_paste { background-image:url(../img/ico_paste.png) !important; }
 .icon_convertXml { background-image:url(../img/ico_convert_xml.png) !important; }
 .icon_highlight { background-image:url(../img/ico_highlight.png) !important; }
+
+.icon_small_save {
+	background-image:url(../img/ico_save_small.png) !important;
+	background-repeat: no-repeat;
+}
 
 .icon_tree_addKey {
 	background-image:url(../img/ico_add_small.png) !important;

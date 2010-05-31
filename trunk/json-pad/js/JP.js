@@ -25,21 +25,29 @@ Ext.ns('JP');
 
 // application main entry point
 Ext.onReady(function() {
-
+    Ext.QuickTips.init();
+    
     var viewport = new Ext.Viewport({
 	layout: 'border',
 	id: 'JPviewPort',
 	items: [
-	    {xtype:'jp_main_top'},
-	    {xtype:'jp_main_center'},
-	    {xtype:'jp_main_bottom'}
+	{
+	    xtype:'jp_main_top'
+	},
+
+	{
+	    xtype:'jp_main_center'
+	},
+
+	{
+	    xtype:'jp_main_bottom'
+	}
 	]
     });
-
-    Ext.QuickTips.init();
 
 // code here
 
 }); // eo function onReady
 
 air.Introspector.Console.info();
+

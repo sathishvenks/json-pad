@@ -4,85 +4,81 @@ JP.MainTop.iconBar = Ext.extend(Ext.Toolbar, {
 	this.items = [
 	{
 	    xtype: 'buttongroup',
-	    title: '',
+	    title: 'Tree',
 	    columns: 2,
-	    id: 'JPiconBarBtnGroupTree',
 	    ref: 'btnGroup_tree',
 	    items: [
 	    {
-		xtype: 'button',
 		iconCls: 'icon_loadToTree',
-		scale: 'large',
-		tooltipType: 'qtip',
+		scale: 'medium',
 		tooltip: 'Load JSON String to tree',
-		id: 'BtnGroupTreeToTree',
-		ref: '../../btn_toTree'
+		ref: 'toTree'
 	    },
 	    {
-		xtype: 'button',
 		iconCls: 'icon_loadFromTree',
 		tooltip: 'Load data from tree as JSON string',
-		tooltipType: 'qtip',
-		scale: 'large',
-		id: 'BtnGroupTreeFromTree',
-		ref: '../../btn_fromTree'
+		scale: 'medium',
+		ref: 'fromTree'
 	    }
 	    ]
 	},
 	{
 	    xtype: 'buttongroup',
-	    title: '',
+	    title: 'Format',
 	    columns: 2,
 	    ref: 'btnGroup_format',
 	    items: [
 	    {
 		iconCls: 'icon_format',
-		scale: 'large',
+		scale: 'medium',
+		tooltip: 'Format JSON string',
 		ref: 'indent'
 	    },
 	    {
 		iconCls: 'icon_compress',
-		scale: 'large',
+		scale: 'medium',
+		tooltip: 'Compress JSON string',
 		ref: 'compress'
 	    }
 	    ]
 	},
 	{
 	    xtype: 'buttongroup',
-	    title: '',
+	    title: 'Clipboard',
 	    columns: 2,
 	    ref: 'btnGroup_clipboard',
 	    items: [
 	    {
-		xtype: 'button',
-		iconCls: 'icon_copyJson',
-		scale: 'large',
+		iconCls: 'icon_copy',
+		scale: 'medium',
+		tooltip: 'Copy JSON into clipboard',
 		ref: 'copy'
 	    },
 	    {
-		xtype: 'button',
-		iconCls: 'icon_pasteJson',
-		scale: 'large',
+		iconCls: 'icon_paste',
+		scale: 'medium',
+		tooltip: 'Paste JSON from clipboard',
 		ref: 'paste'
 	    }
 	    ]
 	},
 	{
 	    xtype: 'buttongroup',
-	    title: '',
+	    title: 'Tools',
 	    columns: 2,
 	    ref: 'btnGroup_others',
 	    items: [
 	    {
-		xtype: 'button',
 		iconCls: 'icon_convertXml',
-		scale: 'large',
+		scale: 'medium',
+		tooltip: 'Convert XML data to JSON',
 		ref: 'convertXML'
 	    },
 	    {
-		xtype: 'button',
 		iconCls: 'icon_highlight',
-		scale: 'large',
+		id: 'BtnJsonStringSyntaxHighlighting',
+		scale: 'medium',
+		tooltip: 'Turn on/off syntax highlighting',
 		ref: 'switchHighlighting',
 		enableToggle: true,
 		pressed: true
@@ -93,6 +89,7 @@ JP.MainTop.iconBar = Ext.extend(Ext.Toolbar, {
 	{
 	    text: 'Examples',
 	    scale: 'large',
+	    tooltip: 'Insert a JSON example',
 	    arrowAlign: 'left',
 	    ref: 'btnExamples',
 	    menu: {
@@ -119,13 +116,16 @@ JP.MainTop.iconBar = Ext.extend(Ext.Toolbar, {
 	];
 	JP.MainTop.iconBar.superclass.initComponent.call(this);
 
+	this.btnGroup_tree.toTree.setHandler( JP.MainTop.Action.iconBar.loadToTree, this );
+	this.btnGroup_tree.fromTree.setHandler( JP.MainTop.Action.iconBar.loadFromTree, this );
+
 	this.btnGroup_format.indent.setHandler( JP.MainTop.Action.iconBar.formatJsonString, this );
 	this.btnGroup_format.compress.setHandler( JP.MainTop.Action.iconBar.compressJsonString, this );
 
-	this.btnGroup_clipboard.copy.setHandler( JP.MainTop.Action.iconBar.copyJsonStringToClipboard, this );
-	this.btnGroup_clipboard.paste.setHandler( JP.MainTop.Action.iconBar.pasteJsonStringFromClipboard, this );
+	this.btnGroup_clipboard.copy.setHandler( JP.MainTop.Action.copyJsonStringToClipboard, this );
+	this.btnGroup_clipboard.paste.setHandler( JP.MainTop.Action.pasteJsonStringFromClipboard, this );
 
-	this.btnGroup_others.convertXML.setHandler( JP.MainTop.Action.iconBar.openXmlWindow, this );
+	this.btnGroup_others.convertXML.setHandler( JP.MainTop.Action.openXmlWindow, this );
 	this.btnGroup_others.switchHighlighting.on( "toggle", JP.MainTop.Action.iconBar.switchHighlighting, this );
 	
 	this.btnExamples.menu.example1.setHandler( JP.MainTop.Action.iconBar.insertExample, this.btnExamples.menu.example1 );

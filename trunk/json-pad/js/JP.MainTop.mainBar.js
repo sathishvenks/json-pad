@@ -4,20 +4,12 @@ JP.MainTop.mainBar = Ext.extend(Ext.Toolbar, {
 	this.items = [
 	{
 	    text: 'File',
-	    id: 'JsonStringForm_tbar_file',
 	    ref: 'file',
 	    menu: {
-		id: 'menu_file',
 		ref: 'menu',
 		items: [
-		/*{
-		    text: 'New',
-		    id: 'btn_menu_file_new',
-		    statusBarTip: 'Clears textarea and tree'
-		},*/
 		{
 		    text: 'Quit',
-		    id: 'btn_menu_file_quit',
 		    statusBarTip: 'Quit the application',
 		    ref: 'quit'
 		}
@@ -26,24 +18,24 @@ JP.MainTop.mainBar = Ext.extend(Ext.Toolbar, {
 	},
 	{
 	    text: 'Edit',
-	    id: 'JsonStringForm_tbar_edit',
+	    ref: 'edit',
 	    menu: {
-		id: 'menu_edit',
+		ref: 'menu',
 		items: [
 		{
 		    text: 'XML2JSON Converter',
-		    id: 'btn_menu_file_xml2json',
+		    ref: 'xml2json',
 		    statusBarTip: 'Convert XML data to a JSON string and insert it in the textarea'
 		},
 		'-',
 		{
 		    text: 'Copy JSON string',
-		    id: 'btn_menu_file_copyJson',
+		    ref: 'copy',
 		    statusBarTip: 'Copy JSON string to clipboard'
 		},
 		{
 		    text: 'Paste JSON string',
-		    id: 'btn_menu_file_pasteJson',
+		    ref: 'paste',
 		    statusBarTip: 'Paste JSON string from cliboard'
 		}
 		]
@@ -51,19 +43,18 @@ JP.MainTop.mainBar = Ext.extend(Ext.Toolbar, {
 	},
 	{
 	    text: 'Help',
-	    id: 'JsonStringForm_tbar_help',
+	    ref: 'help',
 	    menu: {
-		id: 'menu_help',
+		ref: 'menu',
 		items: [
 		{
-		    text: 'About...',
-		    id: 'btn_menu_help_about',
-		    statusBarTip: 'About the application'
-		    //handler: JP.TopPanel.Action.aboutApplication
-		},'-',{
 		    text: 'Check for updates',
-		    id: 'btn_menu_help_checkUpdate',
+		    ref: 'checkUpdate',
 		    statusBarTip: 'Check if updates available'
+		},'-',{
+		    text: 'About...',
+		    ref: 'about',
+		    statusBarTip: 'About the application'
 		}
 		]
 	    }
@@ -72,7 +63,36 @@ JP.MainTop.mainBar = Ext.extend(Ext.Toolbar, {
 	JP.MainTop.mainBar.superclass.initComponent.call(this);
 
 
-	this.file.menu.quit.setHandler( JP.MainTop.Action.quitApplication );
+	this.file.menu.quit.setHandler( JP.MainTop.Action.mainBar.quitApplication );
+	
+	this.edit.menu.xml2json.setHandler( JP.MainTop.Action.openXmlWindow, this );
+	this.edit.menu.copy.setHandler( JP.MainTop.Action.copyJsonStringToClipboard, this );
+	this.edit.menu.paste.setHandler( JP.MainTop.Action.pasteJsonStringFromClipboard, this );
+
+	this.help.menu.checkUpdate.setHandler( function () {
+	    UpdateApplication.checkUpdate(true);
+	}, this );
+	this.help.menu.about.setHandler( JP.MainTop.Action.mainBar.openAboutWindow, this );
+
+
+	this.file.menu.addListener("mouseover", this.onMenuMouseover);
+	this.file.menu.addListener("mouseout", this.onMenuMouseout);
+	this.edit.menu.addListener("mouseover", this.onMenuMouseover);
+	this.edit.menu.addListener("mouseout", this.onMenuMouseout);
+	this.help.menu.addListener("mouseover", this.onMenuMouseover);
+	this.help.menu.addListener("mouseout", this.onMenuMouseout);
+    },
+    onMenuMouseover: function (menu, e, menuItem) {
+	JP.util.setJPStatus({
+	    text: menuItem.statusBarTip,
+	    clear: false
+	}, "left");
+    },
+    onMenuMouseout: function () {
+	JP.util.setJPStatus({
+	    text: "",
+	    clear: false
+	}, "left");
     }
 });
 

@@ -8,31 +8,23 @@ JP.XmlWindow.Action = {
 
 	if (value.trim() != "")
 	{
-	    try
-	    {
-		var jsonObject = Ext.util.JSON.decode(value);
-	    }
-	    catch (e)
-	    {
-		//setStatusbarStatus("No valid JSON data", "error", true); //@todo Statusbar implementieren..
-		return;
-	    }
-
-	    var xmlData = xmlJsonClass.json2xml(jsonObject, "  ");
-
-	    var xmlDataArr = xmlData.split("\n");
-
-	    debug.dump(xmlDataArr, "xmlDataArr");
-
-	    for (var i = 0; i < xmlDataArr.length; i++)
-		xmlDataArr[i] = (i < xmlDataArr.length-1 ? "  " : "") + xmlDataArr[i];
-
-	    xmlData = "<root>\n"+xmlDataArr.join("\n")+"</root>";
-	    //debug.trace(defer);
-	    //debug.dump(xmlData, "xmlData");
-
+	    var json = JP.util.parseJson(value);
 	    var xmlInputField = Ext.getCmp("JP_convertXmlWindow").findByType("jp_xmlwindow_xmlform")[0].findByType("ux-codemirror")[0];
-	    xmlInputField.setValue(xmlData);
+
+	    if (JP.util.validateJson(json)) {
+		var xmlData = xmlJsonClass.json2xml(json, "  ");
+
+		var xmlDataArr = xmlData.split("\n");
+
+		for (var i = 0; i < xmlDataArr.length; i++)
+		    xmlDataArr[i] = (i < xmlDataArr.length-1 ? "  " : "") + xmlDataArr[i];
+
+		xmlData = "<root>\n"+xmlDataArr.join("\n")+"</root>";
+
+		xmlInputField.setValue(xmlData);
+	    } else {
+		xmlInputField.setValue("");
+	    }
 	}
 	else
 	{

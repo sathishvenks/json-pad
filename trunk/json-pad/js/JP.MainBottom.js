@@ -1,6 +1,7 @@
 JP.MainBottom = Ext.extend(Ext.Panel, {
     title: '',
     region: 'south',
+    cls: 'main-bottom-panel',
     //id: 'JPsouth',
     initComponent: function() {
 	this.bbar = {
@@ -15,11 +16,19 @@ JP.MainBottom = Ext.extend(Ext.Panel, {
 	    ' ',
 	    {
 		xtype: 'tbtext',
-		text: 'Text Item'
+		id: 'JPmainStatusBar_Right',
+		text: '&nbsp;'
 	    }
 	    ]
 	};
 	JP.MainBottom.superclass.initComponent.call(this);
+
+	this.addListener("afterrender", function () {
+	    this.updateContent("/");
+	}, this);
+    },
+    updateContent: function (str) {
+	Ext.get(Ext.query("div.main-bottom-panel div.x-panel-body")[0]).update( str );
     }
 });
 

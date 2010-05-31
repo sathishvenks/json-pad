@@ -9,34 +9,34 @@ JP.XmlWindow.xmlForm = Ext.extend(Ext.FormPanel, {
 	this.tbar = {
 	    items: [{
 		xtype: 'buttongroup',
-		title: '',
+		title: 'Clipboard',
 		columns: 2,
-		ref: '../btnGroup_clipboard',
+		ref: 'btnGroup_clipboard',
 		items: [
 		{
-		    xtype: 'button',
-		    iconCls: 'icon_copyJson',
-		    scale: 'large',
+		    iconCls: 'icon_copy',
+		    scale: 'medium',
+		    tooltip: 'Copy JSON into clipboard',
 		    ref: 'copy'
 		},
 		{
-		    xtype: 'button',
-		    iconCls: 'icon_pasteJson',
-		    scale: 'large',
+		    iconCls: 'icon_paste',
+		    scale: 'medium',
+		    tooltip: 'Paste JSON from clipboard',
 		    ref: 'paste'
 		}
 		]
 	    },
 	    {
 		xtype: 'buttongroup',
-		title: '',
+		title: 'Tools',
 		columns: 2,
-		ref: '../btnGroup_others',
+		ref: 'btnGroup_others',
 		items: [
 		{
-		    xtype: 'button',
 		    iconCls: 'icon_highlight',
-		    scale: 'large',
+		    scale: 'medium',
+		    tooltip: 'Turn on/off syntax highlighting',
 		    ref: 'switchHighlighting',
 		    enableToggle: true,
 		    pressed: true
@@ -85,12 +85,16 @@ JP.XmlWindow.xmlForm = Ext.extend(Ext.FormPanel, {
 	    }
 	}];
 
+	
+
 	JP.XmlWindow.xmlForm.superclass.initComponent.call(this);
 
-	this.btnGroup_clipboard.copy.setHandler( JP.XmlWindow.Action.tbar.copyXmlStringToClipboard, this );
-	this.btnGroup_clipboard.paste.setHandler( JP.XmlWindow.Action.tbar.pasteXmlStringFromClipboard, this );
+	var tb = this.getTopToolbar();
 
-	this.btnGroup_others.switchHighlighting.on("toggle", JP.XmlWindow.Action.tbar.switchHighlighting, this);
+	tb.btnGroup_clipboard.copy.setHandler( JP.XmlWindow.Action.tbar.copyXmlStringToClipboard, this );
+	tb.btnGroup_clipboard.paste.setHandler( JP.XmlWindow.Action.tbar.pasteXmlStringFromClipboard, this );
+
+	tb.btnGroup_others.switchHighlighting.on("toggle", JP.XmlWindow.Action.tbar.switchHighlighting, this);
     }
 });
 

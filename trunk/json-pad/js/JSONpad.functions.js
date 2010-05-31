@@ -21,7 +21,6 @@ var UpdateApplication = {
     },
 
     checkUpdate: function () {
-	debug.trace("blub?");
 	UpdateApplication.appUpdater.checkNow();
     },
 
@@ -55,19 +54,10 @@ var JSONpadAir = {
 	this.prefsFile = this.prefsFile.resolvePath("settings.xml");
 	this.readXML();
 
-	debug.dump(this.settings, "settings");
-
 	UpdateApplication.appUpdater.configurationFile = new air.File( UpdateApplication.configXml );
 	UpdateApplication.appUpdater.addEventListener(air.ErrorEvent.ERROR, UpdateApplication.onError);
 	UpdateApplication.appUpdater.addEventListener("initialized", UpdateApplication.onInitialization);
 	UpdateApplication.appUpdater.initialize();
-    },
-    quit: function () {
-	var exitingEvent = new air.Event(air.Event.EXITING, false, true);
-	air.NativeApplication.nativeApplication.dispatchEvent(exitingEvent);
-	if (!exitingEvent.isDefaultPrevented()) {
-	    air.NativeApplication.nativeApplication.exit();
-	}
     },
     readXML: function () {
 	this.stream = new air.FileStream();
@@ -119,12 +109,18 @@ var JSONpadAir = {
 	this.stream.close();
     },
     windowClosingHandler: function (event) {
-	debug.trace("In Handler.."+Ext.getCmp("btn_menu_ico_codeMirror").pressed);
-	event.preventDefault();
-	nativeWindow.removeEventListener("closing", JSONpadAir.windowClosingHandler)
+	debug.trace("start windowClosingHandler");
+
+	
+
 	JSONpadAir.saveData({
-	    syntax_hl: Ext.getCmp("btn_menu_ico_codeMirror").pressed
+	    syntax_hl: Ext.getCmp("JPviewPort").findByType("jp_main_top")[0].getTopToolbar().findByType("jp_main_top_iconbar")[0].btnGroup_others.switchHighlighting.pressed
+
 	});
-	JSONpadAir.quit();
+
+	event.preventDefault();
+	nativeWindow.removeEventListener("closing", JSONpadAir.windowClosingHandler);
+	
+	JP.util.air.exit();
     }
 }
