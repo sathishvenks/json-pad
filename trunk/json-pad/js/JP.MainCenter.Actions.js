@@ -54,7 +54,7 @@ JP.MainCenter.Action.tree = {
 	newChildConfig.id = Ext.id();
 
 	if ( parentNode.attributes.type == "array" && (nodeType == "object" || nodeType == "array") ) {
-	    newChildConfig.text = "[object " + type.toFirstUpperCase() + "]";
+	    newChildConfig.text = "[object " + nodeType.toFirstUpperCase() + "]";
 	} else {
 	    newChildConfig.text = "New" + nodeType.toFirstUpperCase();
 	}

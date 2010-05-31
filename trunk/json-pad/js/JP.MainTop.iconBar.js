@@ -65,7 +65,7 @@ JP.MainTop.iconBar = Ext.extend(Ext.Toolbar, {
 	{
 	    xtype: 'buttongroup',
 	    title: 'Tools',
-	    columns: 2,
+	    columns: 3,
 	    ref: 'btnGroup_others',
 	    items: [
 	    {
@@ -73,6 +73,12 @@ JP.MainTop.iconBar = Ext.extend(Ext.Toolbar, {
 		scale: 'medium',
 		tooltip: 'Convert XML data to JSON',
 		ref: 'convertXML'
+	    },
+	    {
+		iconCls: 'icon_validate',
+		scale: 'medium',
+		tooltip: 'Validate JSON string',
+		ref: 'validateJson'
 	    },
 	    {
 		iconCls: 'icon_highlight',
@@ -126,6 +132,7 @@ JP.MainTop.iconBar = Ext.extend(Ext.Toolbar, {
 	this.btnGroup_clipboard.paste.setHandler( JP.MainTop.Action.pasteJsonStringFromClipboard, this );
 
 	this.btnGroup_others.convertXML.setHandler( JP.MainTop.Action.openXmlWindow, this );
+	this.btnGroup_others.validateJson.setHandler( JP.MainTop.Action.iconBar.validateJsonString, this );
 	this.btnGroup_others.switchHighlighting.on( "toggle", JP.MainTop.Action.iconBar.switchHighlighting, this );
 	
 	this.btnExamples.menu.example1.setHandler( JP.MainTop.Action.iconBar.insertExample, this.btnExamples.menu.example1 );

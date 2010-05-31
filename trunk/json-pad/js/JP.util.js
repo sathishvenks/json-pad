@@ -11,13 +11,13 @@ JP.util = {
 	if ( Ext.isAir ) return JP.util.air.pasteFromClipboard();
 	else return JP.util.web.pasteFromClipboard();
     },
-    validateJson: function (json) {
+    validateJson: function (json, clear) {
 	if (!json.errorObject) {
-	    JP.util.clearCodeMirrorStatus();
+	    debug.trace("clear?"+clear);
+	    if (clear) JP.util.clearCodeMirrorStatus();
 
 	    return true;
 	} else {
-	    debug.dump(json.errorObject, "json.errorObject");
 	    JP.util.setCodeMirrorStatus({
 		text: json.errorObject.length + ' error/s in JSON string. Click for details...',
 		iconCls: 'x-status-error x-status-error-detail-link',

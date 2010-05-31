@@ -33,79 +33,88 @@ JP.MainTop.Action.iconBar = {
     loadToTree: function () {
 	var stringInputField = this.findParentByType("viewport").findByType("jp_main_center_stringForm")[0].findByType("ux-codemirror")[0];
 	var value = stringInputField.getValue().trim();
-	var json = JP.util.parseJson(value, true);
 
-	if (JP.util.validateJson(json)) {
-	    var buildObjectForTree = function (obj, treeObj, lvl, parentIsArray) {
-		var ind = null;
-		//var counter = 1;
-		lvl++;
+	if (value == "") {
+	    JP.util.setJPStatus({
+		text: 'Empty JSON string',
+		iconCls: 'x-status-error',
+		clear: true
+	    }, 'left');
+	} else {
+	    var json = JP.util.parseJson(value, true);
 
-		for (ind in obj) {
-		    if (ind != "remove" && ind != "in_array") {
-			var text = ind;
-			var nodeType = Ext.type( obj[ind] );
-			;
-			var nodeObject = new Object();
+	    if (JP.util.validateJson(json, true)) {
+		var buildObjectForTree = function (obj, treeObj, lvl, parentIsArray) {
+		    var ind = null;
+		    //var counter = 1;
+		    lvl++;
 
-			nodeObject.id = Ext.id();
-			if ( isObject( obj[ind] ) && obj[ind] != null )
-			{
-			    if ( parentIsArray )
-				text = "[object " + nodeType.toFirstUpperCase() + "]";
+		    for (ind in obj) {
+			if (ind != "remove" && ind != "in_array") {
+			    var text = ind;
+			    var nodeType = Ext.type( obj[ind] );
+			    ;
+			    var nodeObject = new Object();
 
-			    nodeObject.iconCls = 'ico_' + nodeType;
-			    nodeObject.expandable = true;
-			    nodeObject.leaf = false;
-			    nodeObject.children = buildObjectForTree(obj[ind], [], lvl, (nodeType == "array"));
+			    nodeObject.id = Ext.id();
+			    if ( isObject( obj[ind] ) && obj[ind] != null )
+			    {
+				if ( parentIsArray )
+				    text = "[object " + nodeType.toFirstUpperCase() + "]";
+
+				nodeObject.iconCls = 'ico_' + nodeType;
+				nodeObject.expandable = true;
+				nodeObject.leaf = false;
+				nodeObject.children = buildObjectForTree(obj[ind], [], lvl, (nodeType == "array"));
+			    }
+			    else
+			    {
+				if (obj[ind] == null)
+				    nodeType = "null";
+
+				if (parentIsArray)
+				    text = obj[ind];
+
+				nodeObject.expandable = false;
+				nodeObject.leaf = true;
+				nodeObject.value = obj[ind];
+			    }
+
+			    nodeObject.text = text;
+			    nodeObject.type = nodeType;
+
+			    treeObj.push( nodeObject );
+
+			//counter++;
 			}
-			else
-			{
-			    if (obj[ind] == null)
-				nodeType = "null";
-
-			    if (parentIsArray)
-				text = obj[ind];
-
-			    nodeObject.expandable = false;
-			    nodeObject.leaf = true;
-			    nodeObject.value = obj[ind];
-			}
-
-			nodeObject.text = text;
-			nodeObject.type = nodeType;
-
-			treeObj.push( nodeObject );
-
-		    //counter++;
 		    }
-		}
 
-		return treeObj;
-	    };
+		    return treeObj;
+		};
 
-	    var rootType = (value == "" ? null : Ext.type(json));
+		var rootType = (value == "" ? null : Ext.type(json));
 
-	    var treeNodes = buildObjectForTree(json, [], 0, (rootType == "array"));
+		var treeNodes = buildObjectForTree(json, [], 0, (rootType == "array"));
 
-	    var root = JP.util.getJsonTreeDefaultRootNode( rootType, treeNodes );
-	    var tree = this.findParentByType("viewport").findByType("jp_main_center_jsonTree")[0];
+		var root = JP.util.getJsonTreeDefaultRootNode( rootType, treeNodes );
+		var tree = this.findParentByType("viewport").findByType("jp_main_center_jsonTree")[0];
 
-	    tree.setRootNode(root);
-	    tree.getLoader().load( tree.root );
+		tree.setRootNode(root);
+		tree.getLoader().load( tree.root );
 
-	    var editKeyForm = this.findParentByType("viewport").findByType("jp_main_center_ediTreeForm_tabs_edit")[0];
+		var editKeyForm = this.findParentByType("viewport").findByType("jp_main_center_ediTreeForm_tabs_edit")[0];
 
-	    editKeyForm.formUnsaved = false;
+		editKeyForm.formUnsaved = false;
+
+		tree.getSelectionModel().select( tree.getRootNode() );
+
+		JP.util.setJPStatus({
+		    text: 'Made succesfully a tree with the JSON string',
+		    iconCls: 'x-status-valid',
+		    clear: true
+		}, 'left');
+	    }
 	}
-
-	tree.getSelectionModel().select( tree.getRootNode() );
-
-	JP.util.setJPStatus({
-	    text: 'Made succesfully a tree with the JSON string',
-	    iconCls: 'x-status-valid',
-	    clear: true
-	}, 'left');
     },
     loadFromTree: function () {
 	var compress = false;
@@ -135,7 +144,6 @@ JP.MainTop.Action.iconBar = {
 	}
 
 	var buildJSONString = function ( node, jsonString, lvl, compress ) {
-	    debug.trace(lvl);
 	    lvl++;
 
 	    var tab = "";
@@ -236,13 +244,35 @@ JP.MainTop.Action.iconBar = {
 
 	var json = JP.util.parseJson(stringInputField.getValue(), true);
 
-	if (JP.util.validateJson(json)) {
+	if (JP.util.validateJson(json, true)) {
 	    stringInputField.setValue( JSON.stringify(json, null, '  ') );
 	    JP.util.setJPStatus({
 		text: 'Formatted JSON string succesfully',
 		iconCls: 'x-status-valid',
 		clear: true
 	    }, 'left');
+	}
+    },
+
+    validateJsonString: function () {
+	var stringInputField = this.findParentByType("viewport").findByType("jp_main_center_stringForm")[0].findByType("ux-codemirror")[0];
+
+	if (stringInputField.getValue().trim() == "") {
+	    JP.util.setJPStatus({
+		text: 'Empty JSON string',
+		iconCls: 'x-status-error',
+		clear: true
+	    }, 'left');
+	} else {
+	    var json = JP.util.parseJson(stringInputField.getValue(), true);
+
+	    if (JP.util.validateJson(json, false)) {
+		JP.util.setCodeMirrorStatus({
+		    text: 'JSON string is valid',
+		    iconCls: 'x-status-valid',
+		    clear: true
+		});
+	    }
 	}
     },
 

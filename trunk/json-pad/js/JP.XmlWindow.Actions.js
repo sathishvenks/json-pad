@@ -11,7 +11,7 @@ JP.XmlWindow.Action = {
 	    var json = JP.util.parseJson(value);
 	    var xmlInputField = Ext.getCmp("JP_convertXmlWindow").findByType("jp_xmlwindow_xmlform")[0].findByType("ux-codemirror")[0];
 
-	    if (JP.util.validateJson(json)) {
+	    if (JP.util.validateJson(json, true)) {
 		var xmlData = xmlJsonClass.json2xml(json, "  ");
 
 		var xmlDataArr = xmlData.split("\n");

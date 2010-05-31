@@ -44,7 +44,6 @@ Ext.onReady(function() {
 	}
 	]
     });
-
 // code here
 
 }); // eo function onReady

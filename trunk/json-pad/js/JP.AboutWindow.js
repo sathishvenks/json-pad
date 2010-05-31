@@ -13,21 +13,21 @@ JP.AboutWindow = Ext.extend(Ext.Window, {
 	var me = this;
 
 	var text =  '<span style="font-size: 11px;">'+
-		    "<p>This project started by Christopher S&ouml;llinger and is a Non-Profit free software by the {2}.<br />It is open source, so feel "+
-		    "free to download the latest source code at {3}.<br />&nbsp;<br />"+
-		    "If you have any problems you have different methods to give it back to me:</p>"+
-		    "<p>- Write it to {4}<br />"+
-		    "-&nbsp;Or you can even post an issue to {5}<br />"+
-		    "-&nbsp;Or just get it contact with me:<br />"+
-		    '&nbsp;&nbsp;<a href="#" id="mailto:zerogiven@gmail.com" class="link-to-browser">zerogiven@gmail.com</a><br />'+
-		    '&nbsp;&nbsp;<a href="#" id="http://www.twitter.com/JSONpad/" class="link-to-browser">http://www.twitter.com/JSONpad</a>'+
-		    "</p>&nbsp;<br />"+
-		    '<p>If you want have more informations or news about JSONpad, feel free to visit the {6} or the {7}.</p>&nbsp;<br />'+
-		    '</span>'+
-		    '<span style="font-size: 9px;">'+
-		    "JSONpad Version Number: {0}<br />"+
-		    "ExtJS Version Number: {1}<br />&nbsp;<br />"+
-		    '</span>';
+	"<p>This project started by Christopher S&ouml;llinger and is a Non-Profit free software by the {2}.<br />It is open source, so feel "+
+	"free to download the latest source code at {3}.<br />&nbsp;<br />"+
+	"If you have any problems you have different methods to give it back to me:</p>"+
+	"<p>- Write it to {4}<br />"+
+	"-&nbsp;Or you can even post an issue to {5}<br />"+
+	"-&nbsp;Or just get it contact with me:<br />"+
+	'&nbsp;&nbsp;<a href="#" id="mailto:zerogiven@gmail.com" class="link-to-browser">zerogiven@gmail.com</a><br />'+
+	'&nbsp;&nbsp;<a href="#" id="http://www.twitter.com/JSONpad/" class="link-to-browser">http://www.twitter.com/JSONpad</a>'+
+	"</p>&nbsp;<br />"+
+	'<p>If you want have more informations or news about JSONpad, feel free to visit the {6} or the {7}.</p>&nbsp;<br />'+
+	'</span>'+
+	'<span style="font-size: 9px;">'+
+	"JSONpad Version Number: {0}<br />"+
+	"ExtJS Version Number: {1}<br />&nbsp;<br />"+
+	'</span>';
 
 	var jsonPadVersion = UpdateApplication.getApplicationVersion();
 	var extjsVersion = Ext.version;
@@ -58,6 +58,14 @@ JP.AboutWindow = Ext.extend(Ext.Window, {
 	}];*/
 
 	JP.AboutWindow.superclass.initComponent.call(this);
+
+	this.addListener("afterrender", function () {
+	    Ext.select("a.link-to-browser").on("click", function (e, el) {
+		var href = el.id;
+		openUrl(href);
+		return false;
+	    });
+	});
     }
 });
 
