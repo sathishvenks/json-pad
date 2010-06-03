@@ -2,7 +2,7 @@
 ==Known issues/bugs==
 
 Bad HTML Sign at the end of a JSON string
-I found out that Adobe Air and / or codemirror adding a &#8203;​ (more information about this at www.quirksmode.org) at the end of a CodeMirror input. This normally doesn't care but if you make a "Select All" (Strg+A) and a "Copy" (Strg+C) after you will copy the string with this html sign.
+I found out that Adobe Air and / or codemirror adding a &#8203;​ (more information about this at www.quirksmode.org) at the end of a codemirror input. This normally doesn't care but if you make a "Select All" (Strg+A) and a "Copy" (Strg+C) after you will copy the string with this html sign.
 
 So this matters if you put the string into an textarea cause the browsers ignore that html sign inside an textarea, but they set the value after paste with the sign. This can occur an error in different ways.
 
