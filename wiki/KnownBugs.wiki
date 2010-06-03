@@ -11,6 +11,6 @@ But, this sign is just in your clipboard if you press Strg+A for selection all i
 
 # Copy the string with the button inside JSONpad. How i said it just happens at selecting all..
 # Select the string from the beginning to the end by yourself. But remember that you just select it to the last } or ].
-# Turning off the Syntax Highlighting. This also turns off CodeMirror and you have a normal textarea.
+# Turning off the Syntax Highlighting. This also turns off codemirror and you have a normal textarea.
 
 Maybe i can fix it, but at the moment it is not blocking me at working with JSONpad.
