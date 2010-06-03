@@ -2,6 +2,12 @@
 #labels Phase-Implementation,Featured
 
 = Changelog =
+===v1.3.0===
+    * JSON validation (http://www.jslint.com/)
+    * Some design changes
+    * New application code design
+    * XML window got an toolbar now
+    * Bugfixes
 ===v1.2.1===
     * Compress JSON string button based on jsmin by Douglas Crockford (http://javascript.crockford.com/jsmin.html)
     * Format button based on the JSON stringify function from json2 parser (http://www.json.org/js.html)
