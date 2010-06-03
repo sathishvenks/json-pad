@@ -44,9 +44,7 @@ Ext.onReady(function() {
 	}
 	]
     });
-// code here
-
 }); // eo function onReady
 
-air.Introspector.Console.info();
-
+debug.trace(UpdateApplication.getApplicationInfo()[2]);
+if (UpdateApplication.getApplicationInfo()[2] == "JSONpad-air.html") air.Introspector.Console.info();

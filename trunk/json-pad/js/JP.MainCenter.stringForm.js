@@ -30,6 +30,7 @@ JP.MainCenter.stringForm = Ext.extend(Ext.FormPanel, {
 	    xtype: 'statusbar',
 	    id: 'JPstringInputStatusBar', //@todo maybe without ids...
 	    statusAlign: 'left',
+	    autoClear: 2500,
 	    defaultText: '',
 	    text: '',
 	    iconCls: ''
@@ -37,7 +38,19 @@ JP.MainCenter.stringForm = Ext.extend(Ext.FormPanel, {
 
 	JP.MainCenter.stringForm.superclass.initComponent.call(this);
 
-	
+	me.addListener("resize", function () {
+	    var errorWindow = Ext.getCmp("JP_errorWindow");
+
+	    if (errorWindow) {
+		if ( errorWindow.isVisible() ) {
+		    var errorContainer = Ext.get(Ext.query(".x-status-text")[0]);
+		    var cmp = Ext.getCmp(errorContainer.id);
+		    var pos = cmp.getPosition();
+
+		    JP.ErrorWindow.Action.window.setPosition( pos[0]+25, pos[1] );
+		}
+	    }
+	});
     }
 });
 

@@ -35,7 +35,17 @@ JP.MainCenter.ediTreeForm = Ext.extend(Ext.Panel, {
 		    this.findByType("jp_main_center_ediTreeForm_tabs_edit")[0].saveForm( getActiveTab );
 		    break;
 	    }
-	}, me)
+	}, me);
+
+	me.addListener("resize", function () {
+	    // No idea why at the moment but it does not fit on resize automatically
+	    this.findByType("jp_main_center_ediTreeForm_tabs")[0].setHeight("100%");
+	    this.findByType("jp_main_center_ediTreeForm_tabs")[0].setWidth("100%");
+	    this.findByType("jp_main_center_ediTreeForm_tabs_edit")[0].setHeight("100%");
+	    this.findByType("jp_main_center_ediTreeForm_tabs_edit")[0].setWidth("100%");
+	    this.findByType("jp_main_center_ediTreeForm_tabs_edit_key")[0].setHeight("100%");
+	    this.findByType("jp_main_center_ediTreeForm_tabs_edit_key")[0].setWidth("100%");
+	}, me);
     }
 });
 

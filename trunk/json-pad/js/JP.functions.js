@@ -8,8 +8,9 @@ var UpdateApplication = {
 	var appXml = new DOMParser();
 	var xmlObject = appXml.parseFromString(xmlString, "text/xml");
 	var root = xmlObject.getElementsByTagName('application')[0];
+	var initialWindow = root.getElementsByTagName('initialWindow')[0];
 
-	return [root.getElementsByTagName("version")[0].firstChild.data, root.getElementsByTagName("name")[0].firstChild.data];
+	return [root.getElementsByTagName("version")[0].firstChild.data, root.getElementsByTagName("name")[0].firstChild.data, initialWindow.getElementsByTagName("content")[0].firstChild.data];
     },
 
     getApplicationVersion: function () {

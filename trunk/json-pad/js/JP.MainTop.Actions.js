@@ -157,19 +157,19 @@ JP.MainTop.Action.iconBar = {
 	    }
 
 	    node.eachChild(function (child) {
-		if (lvl == 1) {
-		    debug.trace(child.text);
-		}
+		var childText = child.attributes.text;
+		childText = unescape(escape(childText).replace(/\%0A/g, "\\n"));
+		childText = childText.replace(/\\n|\\r/g, "\\n").replace(/\"/g, '\\"');
 
 		if ( child.hasChildNodes() ) {
 		    if ( child.attributes.type == "array" && node.attributes.type != "array" )
-			jsonString += tab + spacer + '"' + child.attributes.text + '"' + pt + '[' + lb;
+			jsonString += tab + spacer + '"' + childText + '"' + pt + '[' + lb;
 		    else
 		    {
 			jsonString += tab + spacer;
 
 			if ( node.attributes.type != "array" )
-			    jsonString += '"' + child.attributes.text + '"' + pt;
+			    jsonString += '"' + childText + '"' + pt;
 
 			jsonString += (child.attributes.type == "array" ? '[' : "{") + lb;
 		    }
@@ -181,6 +181,8 @@ JP.MainTop.Action.iconBar = {
 		else
 		{
 		    var nodeValue = child.attributes.value;
+		    nodeValue = unescape(escape(nodeValue).replace(/\%0A/g, "\\n"));
+		    nodeValue = nodeValue.replace(/\\n|\\r/g, "\\n").replace(/\"/g, '\\"');
 
 		    if ( child.attributes.type == "string" )
 			nodeValue = '"' + nodeValue + '"';
@@ -190,7 +192,7 @@ JP.MainTop.Action.iconBar = {
 		    if ( node.attributes.type == "array" )
 			jsonString += nodeValue;
 		    else
-			jsonString += '"' + child.attributes.text + '"' + pt + nodeValue;
+			jsonString += '"' + childText + '"' + pt + nodeValue;
 		}
 
 		jsonString += ( !child.isLast() ? "," : "" ) + lb;

@@ -14,13 +14,18 @@ JP.MainCenter.Action.tree = {
 	var sm = tree.getSelectionModel();
 	var selectedNode = sm.getSelectedNode();
 	var parentNode = null;
+	var collapseNode = false;
 
 	if (selectedNode == null) selectedNode = tree.getRootNode();
 
-	if ( selectedNode.attributes.type == "object" || selectedNode.attributes.type == "array" )
+	if ( selectedNode.attributes.type == "object" || selectedNode.attributes.type == "array" ) {
 	    parentNode = selectedNode;
-	else
+
+	    if (parentNode.isExpandable() && !parentNode.isExpanded())
+		parentNode.expand();
+	} else {
 	    parentNode = selectedNode.parentNode;
+	}
 
 	if ( !parentNode.hasChildNodes() && parentNode.getDepth() == 0 ) {
 	    var root = JP.util.getJsonTreeDefaultRootNode( "object", [] );
@@ -56,17 +61,21 @@ JP.MainCenter.Action.tree = {
 	if ( parentNode.attributes.type == "array" && (nodeType == "object" || nodeType == "array") ) {
 	    newChildConfig.text = "[object " + nodeType.toFirstUpperCase() + "]";
 	} else {
-	    newChildConfig.text = "New" + nodeType.toFirstUpperCase();
+	    if (parentNode.attributes.type != "array") {
+		newChildConfig.text = "New" + nodeType.toFirstUpperCase();
+	    } else {
+		newChildConfig.text = JP.util.getJsonTreeNodeString("empty", false);
+		//newChildConfig.text = "";
+		newChildConfig.value = "";
+	    }
 	}
 
 	var newNode = new Ext.tree.TreeNode( newChildConfig );
 
 	parentNode.insertBefore(newNode, selectedNode.nextSibling);
 
-	if (parentNode.isExpandable() && !parentNode.isExpanded())
-	    parentNode.expand();
-
-	sm.select( newNode );
+	if (newNode)
+	    sm.select( newNode );
     },
     duplicateNode: function () {
 	var tree = Ext.getCmp("JPviewPort").findByType("jp_main_center_jsonTree")[0];
@@ -111,11 +120,18 @@ JP.MainCenter.Action.tree = {
 		    newNode.attributes.value = selectedNode.attributes.value;
 		}
 
+		var nodeText = "";
+
+		nodeText = selectedNode.attributes.text;
+
+		if ( selectedNode.attributes.text == JP.util.getJsonTreeNodeString("empty", false) && selectedNode.attributes.text == JP.util.getJsonTreeNodeString("null", false) )
+		    nodeText += ' Copy';
+
 		newNode.setId(Ext.id());
 		newNode.attributes.iconCls = selectedNode.attributes.iconCls;
 		newNode.attributes.expandable = selectedNode.attributes.expandable;
 		newNode.attributes.leaf = selectedNode.attributes.leaf;
-		newNode.setText(selectedNode.attributes.text + ' Copy');
+		newNode.setText( nodeText );
 		newNode.attributes.type = selectedNode.attributes.type;
 
 		parentNode.insertBefore(newNode, selectedNode.nextSibling);
@@ -143,7 +159,10 @@ JP.MainCenter.Action.tree = {
     },
     setTreePath: function (node, tree) {
 	var treePath = node.getPath("text");
-	treePath = treePath.substr(1, treePath.length).split("/");
+	debug.trace(treePath);
+	treePath = treePath.replace(/\<\//gi, "<|").substr(1, treePath.length).split("/");
+
+	debug.dump(treePath);
 
 	var treePathIds = node.getPath("id");
 	treePathIds = treePathIds.substr(1, treePathIds.length).split("/");
@@ -154,12 +173,13 @@ JP.MainCenter.Action.tree = {
 
 	for (rowNr in treePath) {
 	    if (rowNr != "remove" && rowNr != "in_array") {
+		var pathText = treePath[rowNr].replace(/\<\|/gi, "</");
 		if (count == 0)	{
 		    pathStr += "/ ";
 		} else if (node.id == treePathIds[rowNr]) {
-		    pathStr += treePath[rowNr];
+		    pathStr += pathText;
 		} else {
-		    pathStr += '<a href="#" class="tree-path-link" nodelinkid="' + treePathIds[rowNr] + '">' + treePath[rowNr] + '</a> / ';
+		    pathStr += '<a href="#" class="tree-path-link" nodelinkid="' + treePathIds[rowNr] + '">' + pathText + '</a> / ';
 		}
 		count++;
 	    }
@@ -168,12 +188,12 @@ JP.MainCenter.Action.tree = {
 	var mainBottom = tree.findParentByType("viewport").findByType("jp_main_bottom")[0];
 	mainBottom.updateContent( pathStr );
 
-	Ext.get(Ext.query(".tree-path-link")).on("click", function(e, el, obj) {
-	    var tree = this;
-	    var selectNode = tree.getNodeById( el.getAttribute("nodelinkid") );
+	Ext.get(Ext.query("a.tree-path-link")).on("click", function(e, el, obj) {
+	    var tree = Ext.getCmp("JPviewPort").findByType("jp_main_center_jsonTree")[0];
+	    var selectNode = tree.getNodeById( this.getAttribute("nodelinkid") );
 	    var selectionModel = tree.getSelectionModel();
 
 	    selectionModel.select( selectNode );
-	}, tree);
+	});
     }
 };

@@ -42,14 +42,16 @@ JP.MainCenter.ediTreeForm.tabs.edit.jsonKey = Ext.extend(Ext.FormPanel, {
 	this.isnull.addListener('change', tabsEdit.formChanged, tabsEdit);
 
 	this.isnull.addListener('check', function (checkbox, checked) {
-	    if (checked) {
-		this.jsonvalue.setValue("null");
-		this.jsonvalue.disable();
-	    } else {
-		this.jsonvalue.setValue("");
-		this.jsonvalue.enable();
+	    if (this.isnull.autoTrigger) {
+		if (checked) {
+		    this.jsonvalue.setValue("null");
+		    this.jsonvalue.disable();
+		} else {
+		    this.jsonvalue.setValue("");
+		    this.jsonvalue.enable();
+		}
+		this.jsonvalue.fireEvent("change");
 	    }
-	    this.jsonvalue.fireEvent("change");
 	}, this);
 
 	this.isnull.addListener('afterrender', function(c) {
@@ -74,12 +76,12 @@ JP.MainCenter.ediTreeForm.tabs.edit.jsonKey = Ext.extend(Ext.FormPanel, {
 	this.jsonvalue.addListener('keydown', function () {
 	    if (!tabsEdit.formUnsaved)
 		str = this.getValue();
-	}, this.jsonkey);
+	}, this.jsonvalue);
 
 	this.jsonvalue.addListener('keyup', function () {
 	    if (str != this.getValue() && !tabsEdit.formUnsaved)
 		this.fireEvent("change");
-	}, this.jsonkey);
+	}, this.jsonvalue);
     }
 });
 

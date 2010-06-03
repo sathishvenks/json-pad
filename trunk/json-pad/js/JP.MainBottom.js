@@ -9,6 +9,7 @@ JP.MainBottom = Ext.extend(Ext.Panel, {
 	    id: 'JPmainStatusBar',
 	    ref: 'jpstatus',
 	    statusAlign: 'left',
+	    autoClear: 2500,
 	    defaultText: '',
 	    text: '',
 	    iconCls: '',

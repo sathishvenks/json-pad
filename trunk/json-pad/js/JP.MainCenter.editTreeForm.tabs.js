@@ -2,8 +2,11 @@ JP.MainCenter.ediTreeForm.tabs = Ext.extend(Ext.TabPanel, {
     activeTab: 0,
     resizeTabs: true,
     border: false,
+    //layout: 'fit',
     //id: 'JPeditTabs',
     initComponent: function() {
+	var me = this;
+
 	this.items = [
 	{
 	    xtype: 'jp_main_center_ediTreeForm_tabs_edit'

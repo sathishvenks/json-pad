@@ -40,6 +40,7 @@ JP.util = {
 
 	    var errorContainer = Ext.get(Ext.query(".x-status-error-detail-link")); //@todo Not good for tab plans..
 	    errorContainer.on("click", function (e, t, o) {
+		debug.trace(t.id);
 		var cmp = Ext.getCmp(t.id);
 		var pos = cmp.getPosition();
 
@@ -100,8 +101,8 @@ JP.util = {
     },
     setJPStatus: function (options, align) {
 	if (align == "left") {
-	var sb = Ext.getCmp("JPmainStatusBar"); //@todo We don't like Ext.getCmp at this place!
-	sb.setStatus(options);
+	    var sb = Ext.getCmp("JPmainStatusBar"); //@todo We don't like Ext.getCmp at this place!
+	    sb.setStatus(options);
 	} else if (align == "right") {
 
 	    var text = "";
@@ -157,8 +158,24 @@ JP.util = {
 	    expanded: expanded
 	});
 	return rootNode;
+    },
+    getJsonTreeNodeString: function (str, raw) {
+	var ind;
+	switch(str.toLowerCase()) {
+	    case 'empty':
+		ind = 0;
+		break;
+	    case 'null':
+		ind = 1;
+		break;
+	}
+
+	if (raw)
+	    return JP.constant.NODE_STRING[ind];
+	else
+	    return JP.constant.NODE_STRING[ind].replace(/\</g,"&lt;").replace(/\>/g,"&gt;");
     }
-}
+};
 
 JP.util.web = {
     exit: function () {

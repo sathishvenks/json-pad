@@ -91,9 +91,19 @@ JP.MainCenter.ediTreeForm.tabs.edit = Ext.extend(Ext.Panel, {
 	    if (jsonIsNull || jsonValue == null)
 		node.attributes.type = "null";
 	    else
-		node.attributes.type = Ext.type(jsonValue);
+		node.attributes.type = Ext.type( jsonValue );
 
-	    node.setText ( jsonKey );
+	    if ( node.parentNode.attributes.type == "array" ) {
+		var nodeText = "";
+		if (jsonValue == "") nodeText = JP.util.getJsonTreeNodeString("empty", false);
+		else if (jsonValue == "null") nodeText = JP.util.getJsonTreeNodeString("null", false);
+		else nodeText = jsonValue;
+
+		node.setText ( nodeText );
+		activeForm.jsonkey.setValue( jsonValue );
+	    } else {
+		node.setText ( (jsonKey != "" ? jsonKey : JP.util.getJsonTreeNodeString("empty", false)) );
+	    }
 	    node.attributes.value = jsonValue;
 
 	    statustext = "Saved selected key successfully";
@@ -102,7 +112,7 @@ JP.MainCenter.ediTreeForm.tabs.edit = Ext.extend(Ext.Panel, {
 
 	    var jsonIndex = activeForm.jsonIndex.getValue();
 
-	    node.setText ( jsonIndex );
+	    node.setText ( (jsonIndex != "" ? jsonIndex : JP.util.getJsonTreeNodeString("empty", false)) );
 
 	    statustext = "Saved selected " + node.attributes.type + " successfully";
 	}

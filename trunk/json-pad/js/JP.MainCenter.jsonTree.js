@@ -90,15 +90,13 @@ JP.MainCenter.jsonTree = Ext.extend(Ext.tree.TreePanel, {
 	    event.stopEvent();
 	}, me);
 
-	//me.addListener("append", function (tree, parent, node, ind) {
-	    //if (ind == 0) node.select();
-	//});
+	me.addListener("textchange", function (n, str, strOld) {
+	    JP.MainCenter.Action.tree.setTreePath( n, this );
+	}, me);
 
 	sm.addListener("beforeselect", function (sel, n, o) {
-	    debug.trace("blub2");
 	    var editKeyForm = this.findParentByType("viewport").findByType("jp_main_center_ediTreeForm_tabs_edit")[0];
 	    var topBar = this.getTopToolbar();
-
 
 	    if (editKeyForm.formUnsaved) {
 		editKeyForm.confirmUnsaved(n);
@@ -117,10 +115,19 @@ JP.MainCenter.jsonTree = Ext.extend(Ext.tree.TreePanel, {
 		this.treeContextMenu.duplicateNode.enable();
 		this.treeContextMenu.deleteNode.enable();
 
+		var nodeText = "";
+		if ( n.attributes.text == JP.util.getJsonTreeNodeString("empty", false) ) nodeText = "";
+		else if ( n.attributes.text == JP.util.getJsonTreeNodeString("null", false) ) nodeText = "null";
+		else nodeText = n.attributes.text;
+
 		if ( n.attributes.leaf == true ) {
-		    editKeyForm.keyForm.jsonkey.setValue( n.attributes.text );
+		    editKeyForm.keyForm.jsonkey.setValue( nodeText ); //
 		    editKeyForm.keyForm.jsonvalue.setValue( n.attributes.value );
+		    editKeyForm.keyForm.isnull.autoTrigger = false;
 		    editKeyForm.keyForm.isnull.setValue( ( n.attributes.type == "null" ) );
+		    editKeyForm.keyForm.isnull.autoTrigger = true;
+		    //editKeyForm.keyForm.isnull.checked = ( n.attributes.type == "null" );
+		    //editKeyForm.keyForm.isnull.update();
 
 		    if ( n.parentNode != null && n.parentNode.attributes.type == "array" )
 			editKeyForm.keyForm.jsonkey.disable();
@@ -135,8 +142,14 @@ JP.MainCenter.jsonTree = Ext.extend(Ext.tree.TreePanel, {
 		    editKeyForm.enableKeyForm();
 		} else {
 		    editKeyForm.enableObjectForm();
+		    editKeyForm.objectForm.jsonIndex.setValue( nodeText );
 
-		    editKeyForm.objectForm.jsonIndex.setValue( n.attributes.text );
+		    if (n.parentNode.attributes.type == "array") {
+			editKeyForm.objectForm.jsonIndex.setValue("ARRAY VALUE");
+			editKeyForm.objectForm.jsonIndex.disable();
+		    } else {
+			editKeyForm.objectForm.jsonIndex.enable();
+		    }
 		}
 	    }
 
