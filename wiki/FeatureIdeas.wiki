@@ -1,25 +1,15 @@
 #labels Phase-Implementation
 =Small Ideas=
-
-  # Un-/Quote keys in json string
-  # Statusbar for editor panel
-  # Show/Hide Code-Mirror at XML conversion
   # Format/Compress Button for XML conversion
   # Statusbar for XML editor
 
-
 =Big Ideas=
-
   * *Tabbed Editor*
   A feature for opening "more" json strings. Tabbing the whole editor could be an idea. Every new tab a new instance of the editor.
 .
   
   * *Compare 2 JSON strings*
   With the tab feature we could make it possible to compare two strings in an extra tab (like at netbeans).
-.
-  
-  * *JSONlint/JSlint*
-  Include a validation method for JSON strings based on JSONlint http://www.jsonlint.com/ or JSlint http://www.jslint.com/
 .
   
   * *XML Validator*
