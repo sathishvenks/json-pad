@@ -2,6 +2,10 @@
 #labels Phase-Implementation,Featured
 
 = Changelog =
+===v1.3.1===
+    * Updated AIR Runtime to 2.0
+    * Added an input field for a tree-filter
+    * Some bugfixes
 ===v1.3.0===
     * JSON validation (http://www.jslint.com/)
     * Some design changes
