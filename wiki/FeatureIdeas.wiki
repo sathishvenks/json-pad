@@ -2,6 +2,7 @@
 =Small Ideas=
   # Format/Compress Button for XML conversion
   # Statusbar for XML editor
+  # Load JSON String by URL
 
 =Big Ideas=
   * *Tabbed Editor*
