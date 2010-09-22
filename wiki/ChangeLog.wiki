@@ -2,6 +2,12 @@
 #labels Phase-Implementation,Featured
 
 =Changelog=
+===v1.3.3===
+    * Register .json files for JSONpad
+    * Updatet extern stuff like json2 parser, codemirror, jslint
+    * New settings window available at help menu
+    * Two validation levels (strict/low) available now. Low just allow script urls inside JSON at the moment
+    * Cast all values from a xml to string values inside the json
 ===v1.3.2===
     * Fetch JSON string from url
     * Save JSON string as text file method
