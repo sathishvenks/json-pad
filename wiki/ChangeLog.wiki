@@ -2,6 +2,8 @@
 #labels Phase-Implementation,Featured
 
 =Changelog=
+===v1.3.4===
+    * Bugfixes at the tree form
 ===v1.3.3===
     * Register .json files for JSONpad
     * Updatet extern stuff like json2 parser, codemirror, jslint
