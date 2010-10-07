@@ -2,6 +2,10 @@
 #labels Phase-Implementation,Featured
 
 =Changelog=
+===v1.3.5===
+    * Bugfix for "0" and "1" strings
+    * Added a "New" option at "File" which clears the form and the tree
+    * Arrays and objects inside arrays have now an index number in the tree
 ===v1.3.4===
     * Bugfixes at the tree form
 ===v1.3.3===
